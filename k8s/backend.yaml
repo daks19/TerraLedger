@@ -1,0 +1,112 @@
+# Backend Secrets
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: terraledger
+type: Opaque
+stringData:
+  JWT_SECRET: your-super-secret-jwt-key-change-in-production
+  JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
+  PINATA_API_KEY: your-pinata-api-key
+  PINATA_SECRET_KEY: your-pinata-secret-key
+---
+# Backend ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: terraledger
+data:
+  NODE_ENV: production
+  PORT: "4000"
+  DATABASE_URL: postgresql://terraledger:terraledger_secret_prod@postgres:5432/terraledger
+  REDIS_URL: redis://redis:6379
+  BLOCKCHAIN_RPC_URL: https://polygon-mumbai.g.alchemy.com/v2/your-api-key
+---
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: terraledger
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: terraledger/backend:latest
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secrets
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: terraledger
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 4000
+      targetPort: 4000
+  type: ClusterIP
+---
+# Backend HPA
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-hpa
+  namespace: terraledger
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80

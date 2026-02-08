@@ -1,0 +1,113 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database with PostGIS
+  postgres:
+    image: postgis/postgis:15-3.3
+    container_name: terraledger-postgres
+    environment:
+      POSTGRES_USER: terraledger
+      POSTGRES_PASSWORD: terraledger_secret
+      POSTGRES_DB: terraledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U terraledger -d terraledger"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: terraledger-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: terraledger-backend
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://terraledger:terraledger_secret@postgres:5432/terraledger
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
+      PINATA_API_KEY: your-pinata-api-key
+      PINATA_SECRET_KEY: your-pinata-secret-key
+      BLOCKCHAIN_RPC_URL: http://hardhat:8545
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./apps/backend:/app/apps/backend
+      - /app/apps/backend/node_modules
+
+  # Frontend Web App
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: terraledger-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+      NEXT_PUBLIC_GRAPHQL_URL: http://localhost:4000/graphql
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./apps/web:/app/apps/web
+      - /app/apps/web/node_modules
+      - /app/apps/web/.next
+
+  # Local Hardhat Node (for development)
+  hardhat:
+    build:
+      context: .
+      dockerfile: packages/contracts/Dockerfile
+    container_name: terraledger-hardhat
+    ports:
+      - "8545:8545"
+    volumes:
+      - ./packages/contracts:/app/packages/contracts
+      - /app/packages/contracts/node_modules
+
+  # IPFS Node (optional local node)
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: terraledger-ipfs
+    environment:
+      - IPFS_PROFILE=server
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ipfs_data:/data/ipfs
+
+volumes:
+  postgres_data:
+  redis_data:
+  ipfs_data:
+
+networks:
+  default:
+    name: terraledger-network

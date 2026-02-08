@@ -1,0 +1,95 @@
+Here's a comprehensive breakdown of all technologies and software used in TerraLedger:
+
+🖥️ Frontend (Web App)
+Category	Technology	Version
+Framework	Next.js	14.0.4
+Language	TypeScript	5.3.3
+UI Library	React	18.2.0
+Styling	Tailwind CSS	3.4.0
+CSS Processing	PostCSS, Autoprefixer	8.4.32, 10.4.16
+Icons	Heroicons	2.1.1
+UI Components	Headless UI	1.7.17
+Forms	React Hook Form + Zod	7.49.2, 3.22.4
+State/Data Fetching	TanStack React Query	5.14.0
+GraphQL Client	Apollo Client	3.8.8
+HTTP Client	Axios	1.6.2
+Maps	Leaflet + React-Leaflet	1.9.4, 4.2.1
+Charts	Recharts	2.10.3
+Date Utils	date-fns	3.0.0
+Notifications	React Hot Toast	2.4.1
+Auth	NextAuth.js	4.24.5
+i18n	next-intl	3.4.0
+PWA	next-pwa	5.6.0
+Blockchain	Ethers.js	6.9.0
+⚙️ Backend (API Server)
+Category	Technology	Version
+Runtime	Node.js	—
+Framework	Express.js	4.18.2
+Language	TypeScript	5.3.0
+GraphQL	Apollo Server	4.9.0
+ORM/Database	Prisma	5.7.0
+Database	PostgreSQL + PostGIS	—
+Caching	Redis	4.6.0
+Authentication	JWT (jsonwebtoken)	9.0.2
+2FA/TOTP	otplib, speakeasy	12.0.1, 2.0.0
+QR Codes	qrcode	1.5.3
+Password Hashing	bcryptjs	2.4.3
+Validation	Zod	3.22.0
+File Uploads	Multer	1.4.5
+Security	Helmet, CORS, Rate Limiting	7.1.0, 2.8.5, 7.1.0
+Logging	Winston, Morgan	3.11.0, 1.10.0
+Environment	dotenv	16.3.1
+IPFS	ipfs-http-client	60.0.1
+Blockchain	Ethers.js	6.9.0
+Dev Server	ts-node-dev	2.0.0
+Testing	Jest, ts-jest	29.7.0, 29.1.0
+🔗 Smart Contracts (Blockchain)
+Category	Technology	Version
+Language	Solidity	0.8.20
+Framework	Hardhat	2.19.0
+Smart Contract Library	OpenZeppelin Contracts	5.0.0
+Upgradeable Contracts	OpenZeppelin Upgradeable	5.0.0
+Blockchain Library	Ethers.js	6.9.0
+Testing	Chai + Hardhat Matchers	4.3.10
+Type Generation	TypeChain	8.3.2
+Gas Reporting	hardhat-gas-reporter	1.0.9
+Coverage	solidity-coverage	0.8.5
+Contract Verification	hardhat-verify	2.1.3
+Network	Polygon Amoy Testnet	Chain ID 80002
+🗄️ Database & Storage
+Technology	Purpose
+PostgreSQL	Primary relational database
+PostGIS	Geospatial extension for land boundaries
+Redis	Caching and session storage
+IPFS (Pinata)	Decentralized document storage
+🚀 DevOps & Infrastructure
+Category	Technology
+Containerization	Docker, Docker Compose
+Orchestration	Kubernetes (k8s configs)
+Version Control	Git
+Package Manager	npm (monorepo)
+Linting	ESLint
+Wallet	MetaMask
+📱 External Services
+Service	Purpose
+Polygon Amoy	Blockchain testnet
+Pinata	IPFS pinning service
+OpenStreetMap	Map tiles (via Leaflet)
+
+
+┌─────────────────────────────────────────────────────────────┐
+│                      FRONTEND                                │
+│  Next.js 14 • React 18 • TypeScript • Tailwind • Leaflet    │
+├─────────────────────────────────────────────────────────────┤
+│                       BACKEND                                │
+│  Express • Apollo GraphQL • Prisma • JWT • Redis • Winston  │
+├─────────────────────────────────────────────────────────────┤
+│                      DATABASE                                │
+│  PostgreSQL + PostGIS • Redis • IPFS                        │
+├─────────────────────────────────────────────────────────────┤
+│                     BLOCKCHAIN                               │
+│  Solidity • Hardhat • OpenZeppelin • Polygon Amoy           │
+├─────────────────────────────────────────────────────────────┤
+│                     INFRASTRUCTURE                           │
+│  Docker • Kubernetes • Git • npm                            │
+└─────────────────────────────────────────────────────────────┘

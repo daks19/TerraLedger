@@ -1,0 +1,412 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+// User roles enum
+enum UserRole {
+  LAND_OWNER
+  BUYER
+  GOVERNMENT_OFFICIAL
+  SURVEYOR
+  NOTARY
+  ADMIN
+}
+
+// KYC status enum
+enum KYCStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// Transaction status enum
+enum TransactionStatus {
+  PENDING
+  FUNDED
+  VERIFIED
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+// Parcel status enum
+enum ParcelStatus {
+  ACTIVE
+  TRANSFERRED
+  DISPUTED
+  INACTIVE
+}
+
+// Registration approval status
+enum RegistrationStatus {
+  DRAFT
+  PENDING_REVIEW
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  CHANGES_REQUESTED
+}
+
+// Dispute status enum
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  EVIDENCE_PHASE
+  RESOLVED
+  REJECTED
+  APPEALED
+}
+
+// Inheritance plan status
+enum InheritancePlanStatus {
+  ACTIVE
+  TRIGGERED
+  EXECUTING
+  COMPLETED
+  CANCELLED
+}
+
+// User model
+// Note: Each wallet address must be unique across the entire system
+// One MetaMask wallet = One TerraLedger account
+model User {
+  id              String    @id @default(uuid())
+  walletAddress   String    @unique  // Enforces one account per wallet
+  email           String?   @unique
+  phone           String?   @unique
+  name            String?
+  passwordHash    String?   // For email/password auth
+  roles           UserRole[]
+  kycStatus       KYCStatus @default(PENDING)
+  aadhaarHash     String?   // Encrypted Aadhaar hash
+  panHash         String?   // Encrypted PAN hash
+  twoFactorSecret String?   // Encrypted 2FA secret
+  twoFactorEnabled Boolean  @default(false)
+  metadataUri     String?   // IPFS URI for additional data
+  isActive        Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  lastLoginAt     DateTime?
+  
+  // Relations
+  ownedParcels    LandParcel[]      @relation("ParcelOwner")
+  submittedParcels LandParcel[]     @relation("ParcelSubmitter")
+  approvedParcels LandParcel[]      @relation("ParcelApprover")
+  transactions    Transaction[]     @relation("UserTransactions")
+  sellerTx        Transaction[]     @relation("SellerTransactions")
+  buyerTx         Transaction[]     @relation("BuyerTransactions")
+  disputes        Dispute[]         @relation("DisputeFiler")
+  surveyReports   SurveyReport[]
+  inheritancePlans InheritancePlan[] @relation("PlanOwner")
+  heirTo          Heir[]
+  refreshTokens   RefreshToken[]
+  documents       Document[]
+  auditLogs       AuditLog[]
+
+  @@index([walletAddress])
+  @@index([email])
+  @@index([kycStatus])
+}
+
+// Refresh tokens for JWT
+model RefreshToken {
+  id          String   @id @default(uuid())
+  token       String   @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([token])
+}
+
+// Land Parcel model
+model LandParcel {
+  id              String       @id @default(uuid())
+  parcelId        String       @unique // On-chain parcel ID
+  ownerId         String
+  owner           User         @relation("ParcelOwner", fields: [ownerId], references: [id])
+  
+  surveyNumber    String       @unique
+  areaSqM         Decimal      @db.Decimal(15, 2)
+  village         String
+  district        String
+  state           String
+  
+  // GPS Coordinates for map display
+  latitude        Float
+  longitude       Float
+  
+  // PostGIS geometry for boundaries
+  // Use Unsupported for PostGIS geometry type
+  geometry        Unsupported("geometry(Polygon, 4326)")?
+  boundaryHash    String?      // IPFS hash of GeoJSON
+  
+  ipfsDocHash     String?      // IPFS hash of documents
+  price           Decimal?     @db.Decimal(30, 0) // Price in wei
+  isForSale       Boolean      @default(false)
+  status          ParcelStatus @default(ACTIVE)
+  blockchainTxHash String?
+  
+  // Approval workflow fields
+  registrationStatus RegistrationStatus @default(DRAFT)
+  submittedById   String?      // User who submitted registration
+  submittedBy     User?        @relation("ParcelSubmitter", fields: [submittedById], references: [id])
+  approvedById    String?      // Admin who approved
+  approvedBy      User?        @relation("ParcelApprover", fields: [approvedById], references: [id])
+  reviewedAt      DateTime?    // When reviewed
+  rejectionReason String?      // Reason if rejected
+  submittedAt     DateTime?    // When submitted for approval
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  // Relations
+  transactions    Transaction[]
+  disputes        Dispute[]
+  previousOwners  ParcelOwnerHistory[]
+  inheritancePlans InheritancePlan[]
+  auditEntries    AuditLog[]
+  documents       Document[]
+
+  @@index([parcelId])
+  @@index([surveyNumber])
+  @@index([ownerId])
+  @@index([status])
+  @@index([district, village])
+}
+
+// Owner history for parcels
+model ParcelOwnerHistory {
+  id          String     @id @default(uuid())
+  parcelId    String
+  parcel      LandParcel @relation(fields: [parcelId], references: [id])
+  ownerWallet String
+  fromDate    DateTime
+  toDate      DateTime?
+  txHash      String?
+  
+  createdAt   DateTime   @default(now())
+
+  @@index([parcelId])
+  @@index([ownerWallet])
+}
+
+// Transaction model
+model Transaction {
+  id              String            @id @default(uuid())
+  escrowId        Int?              // On-chain escrow ID
+  parcelId        String
+  parcel          LandParcel        @relation(fields: [parcelId], references: [id])
+  
+  sellerId        String
+  seller          User              @relation("SellerTransactions", fields: [sellerId], references: [id])
+  buyerId         String
+  buyer           User              @relation("BuyerTransactions", fields: [buyerId], references: [id])
+  
+  userId          String?
+  user            User?             @relation("UserTransactions", fields: [userId], references: [id])
+  
+  amount          Decimal           @db.Decimal(30, 0) // Amount in wei
+  platformFee     Decimal?          @db.Decimal(30, 0)
+  status          TransactionStatus @default(PENDING)
+  
+  sellerApproved  Boolean           @default(false)
+  buyerApproved   Boolean           @default(false)
+  govtApproved    Boolean           @default(false)
+  
+  documentsHash   String?           // IPFS hash of transaction docs
+  blockchainHash  String?           // On-chain transaction hash
+  
+  deadline        DateTime?
+  completedAt     DateTime?
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([parcelId])
+  @@index([sellerId])
+  @@index([buyerId])
+  @@index([status])
+  @@index([escrowId])
+}
+
+// Dispute model
+model Dispute {
+  id                String        @id @default(uuid())
+  disputeId         Int?          // On-chain dispute ID
+  parcelId          String
+  parcel            LandParcel    @relation(fields: [parcelId], references: [id])
+  
+  filerId           String
+  filer             User          @relation("DisputeFiler", fields: [filerId], references: [id])
+  
+  affectedParcelIds String[]
+  description       String
+  evidenceHash      String?       // IPFS hash of evidence
+  additionalEvidence String[]
+  
+  status            DisputeStatus @default(OPEN)
+  resolutionType    String?
+  resolutionDetails String?
+  newBoundaryHash   String?
+  
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  // Relations
+  surveyReport      SurveyReport?
+
+  @@index([parcelId])
+  @@index([filerId])
+  @@index([status])
+}
+
+// Survey Report model
+model SurveyReport {
+  id              String   @id @default(uuid())
+  disputeId       String   @unique
+  dispute         Dispute  @relation(fields: [disputeId], references: [id])
+  
+  surveyorId      String
+  surveyor        User     @relation(fields: [surveyorId], references: [id])
+  
+  licenseNumber   String
+  reportHash      String   // IPFS hash of survey report
+  signature       String   // Digital signature
+  
+  isValid         Boolean  @default(false)
+  verifiedAt      DateTime?
+  
+  createdAt       DateTime @default(now())
+
+  @@index([surveyorId])
+}
+
+// Inheritance Plan model
+model InheritancePlan {
+  id              String                @id @default(uuid())
+  planId          Int?                  // On-chain plan ID
+  ownerId         String
+  owner           User                  @relation("PlanOwner", fields: [ownerId], references: [id])
+  
+  parcelIds       String[]
+  parcels         LandParcel[]
+  
+  willHash        String?               // IPFS hash of will
+  deathCertHash   String?               // IPFS hash of death certificate
+  
+  status          InheritancePlanStatus @default(ACTIVE)
+  useAgeMilestones Boolean              @default(false)
+  
+  triggeredAt     DateTime?
+  completedAt     DateTime?
+  
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  
+  // Relations
+  heirs           Heir[]
+  milestones      ReleaseMilestone[]
+
+  @@index([ownerId])
+  @@index([status])
+}
+
+// Heir model
+model Heir {
+  id              String          @id @default(uuid())
+  planId          String
+  plan            InheritancePlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  
+  walletAddress   String
+  percentage      Int             // Share percentage (1-100)
+  releaseAge      Int?            // Age for release (0 = immediate)
+  birthDate       DateTime?
+  
+  hasClaimed      Boolean         @default(false)
+  claimedAt       DateTime?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([planId])
+  @@index([userId])
+}
+
+// Release Milestone model
+model ReleaseMilestone {
+  id         String          @id @default(uuid())
+  planId     String
+  plan       InheritancePlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  
+  age        Int             // Age at which percentage is released
+  percentage Int             // Percentage released at this age
+  
+  createdAt  DateTime        @default(now())
+
+  @@index([planId])
+}
+
+// Audit Log model
+model AuditLog {
+  id          String      @id @default(uuid())
+  parcelId    String?
+  parcel      LandParcel? @relation(fields: [parcelId], references: [id])
+  
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  
+  action      String      // Action type
+  details     String?     // Action details
+  ipAddress   String?
+  userAgent   String?
+  txHash      String?     // Blockchain transaction hash
+  
+  createdAt   DateTime    @default(now())
+
+  @@index([parcelId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// Document metadata model
+model Document {
+  id          String      @id @default(uuid())
+  name        String
+  type        String      // sale_deed, mutation, encumbrance, survey_sketch, will, death_cert, id_proof, ownership_proof
+  ipfsHash    String      @unique
+  size        Int         // Size in bytes
+  mimeType    String
+  uploaderId  String
+  uploader    User        @relation(fields: [uploaderId], references: [id])
+  parcelId    String?
+  parcel      LandParcel? @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime    @default(now())
+
+  @@index([ipfsHash])
+  @@index([uploaderId])
+  @@index([parcelId])
+  @@index([type])
+}

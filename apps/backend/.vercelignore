@@ -1,0 +1,10 @@
+# Don't ignore node_modules - Vercel handles this
+# Don't ignore dist - we need the compiled code
+!dist/
+
+# But do ignore these
+.env
+.env.local
+*.log
+coverage/
+.DS_Store

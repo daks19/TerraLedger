@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Next.js
+.next/
+out/
+
+# Production
+build/
+# dist/ - commenting out for Vercel deployment
+# Vercel needs the compiled files to run the serverless function
+
+# Misc
+.DS_Store
+*.pem
+npm-debug.log*
+pp.py
+main.py
+
+# Log files
+*.log
+logs/
+**/logs/
+
+# Lock files (optional - some prefer to commit these)
+# package-lock.json
+# yarn.lock
+
+# Local env files - NEVER COMMIT THESE
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+apps/backend/.env
+apps/backend/.env.production
+apps/web/.env.local
+packages/contracts/.env
+
+# Hardhat
+packages/contracts/cache/
+packages/contracts/artifacts/
+packages/contracts/deployments/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.vercel
+.env*.local

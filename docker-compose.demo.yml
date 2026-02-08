@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.3
+    container_name: terraledger-postgres
+    environment:
+      POSTGRES_USER: terraledger
+      POSTGRES_PASSWORD: terraledger_secret
+      POSTGRES_DB: terraledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U terraledger -d terraledger"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: terraledger-backend
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://terraledger:terraledger_secret@postgres:5432/terraledger?schema=public
+      # Demo-friendly: accept any origin or set to your deployed frontend URL
+      CORS_ORIGIN: "*"
+
+      JWT_SECRET: terraledger-demo-jwt-secret-change-me
+      JWT_REFRESH_SECRET: terraledger-demo-refresh-secret-change-me
+      JWT_EXPIRES_IN: 24h
+      JWT_REFRESH_EXPIRES_IN: 7d
+
+      # Turn off external deps for a hackathon demo
+      REDIS_URL: ""
+      PINATA_API_KEY: ""
+      PINATA_SECRET_API_KEY: ""
+      SIMULATE_BLOCKCHAIN: "true"
+      LAND_REGISTRY_ADDRESS: ""
+      ESCROW_CONTRACT_ADDRESS: ""
+      INHERITANCE_MANAGER_ADDRESS: ""
+      LAND_BOUNDARY_ADDRESS: ""
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # IMPORTANT: for remote deployment, set this to your public backend URL
+        NEXT_PUBLIC_API_URL: "http://localhost:4000"
+        NEXT_PUBLIC_GRAPHQL_URL: "http://localhost:4000/graphql"
+    container_name: terraledger-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: terraledger-demo-network
