@@ -169,7 +169,7 @@ export default function ParcelsPage() {
                       </div>
                       <div>
                         <span className="text-slate-400">Area:</span>
-                        <span className="ml-2 text-white">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</span>
+                        <span className="ml-2 text-white">{(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft</span>
                       </div>
                       <div className="flex items-center">
                         <MapPinIcon className="w-4 h-4 text-slate-400 mr-1" />

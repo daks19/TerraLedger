@@ -289,7 +289,7 @@ export default function DashboardMapPage() {
                               {parcel.village}, {parcel.district}
                             </div>
                             <div className="text-slate-500 text-xs mt-1">
-                              {(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft
+                              {(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft
                             </div>
                           </div>
                           <span className={`px-2 py-0.5 text-xs rounded ${
@@ -335,7 +335,7 @@ export default function DashboardMapPage() {
                         <div className="text-sm">
                           <strong>{parcel.parcelId}</strong><br />
                           {parcel.village}, {parcel.district}<br />
-                          {(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft
+                          {(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft
                         </div>
                       </Popup>
                     </Marker>
@@ -374,7 +374,7 @@ export default function DashboardMapPage() {
                   </div>
                   <div>
                     <span className="text-slate-400">Area</span>
-                    <p className="text-white">{(selectedParcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</p>
+                    <p className="text-white">{(Number(selectedParcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft</p>
                   </div>
                 </div>
                 <Link

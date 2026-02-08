@@ -271,7 +271,7 @@ export default function PropertyMap({
                   </p>
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-500">Area:</span>
-                    <span className="font-medium">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</span>
+                    <span className="font-medium">{(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft</span>
                   </div>
                   <div className="flex justify-between text-sm mt-1">
                     <span className="text-slate-500">Status:</span>

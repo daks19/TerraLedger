@@ -218,7 +218,7 @@ export default function AdminParcelsPage() {
                         )}
                       </td>
                       <td className="px-6 py-4 text-slate-300">
-                        {(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft
+                        {(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2 py-1 text-xs rounded-full ${

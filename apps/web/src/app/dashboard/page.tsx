@@ -84,7 +84,7 @@ export default function DashboardPage() {
         setStats(prev => ({
           ...prev,
           totalParcels: parcels.length,
-          totalArea: parcels.reduce((sum: number, p: any) => sum + (p.areaSqM || 0), 0),
+          totalArea: parcels.reduce((sum: number, p: any) => sum + (Number(p.areaSqM) || 0), 0),
         }));
       }
 
@@ -392,7 +392,7 @@ export default function DashboardPage() {
               />
               <StatCard
                 title="Total Area"
-                value={`${(stats.totalArea / 10000).toFixed(2)} ha`}
+                value={`${(stats.totalArea * 10.764).toFixed(0).toLocaleString()} sq.ft`}
                 icon={MapIcon}
                 color="bg-green-500"
               />
@@ -463,7 +463,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-slate-300">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
+                      <div className="text-slate-300">{(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
                       <div className={`text-xs px-2 py-1 rounded-full ${
                         parcel.status === 'VERIFIED' ? 'bg-green-500/20 text-green-400' :
                         parcel.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400' :

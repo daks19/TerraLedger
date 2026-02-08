@@ -224,8 +224,8 @@ export default function ParcelDetailPage() {
                 </div>
                 <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-all duration-300">
                   <div className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-1">Area</div>
-                  <div className="text-emerald-400 font-bold text-lg">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
-                  <div className="text-slate-500 text-sm">({(parcel.areaSqM / 10000).toFixed(2)} ha)</div>
+                  <div className="text-emerald-400 font-bold text-lg">{(Number(parcel.areaSqM) * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
+                  <div className="text-slate-500 text-sm">({(Number(parcel.areaSqM) / 10000).toFixed(2)} ha)</div>
                 </div>
               </div>
 
