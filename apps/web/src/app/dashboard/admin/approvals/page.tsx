@@ -216,7 +216,7 @@ export default function ApprovalQueuePage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <div>
                     <div className="text-slate-400 text-xs mb-1">Area</div>
-                    <div className="text-white font-medium">{parcel.areaSqM} sq.m</div>
+                    <div className="text-white font-medium">{(parcel.areaSqM * 10.764).toFixed(0)} sq.ft</div>
                   </div>
                   <div>
                     <div className="text-slate-400 text-xs mb-1">Village</div>
@@ -272,7 +272,7 @@ export default function ApprovalQueuePage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-400">Area</span>
-                      <span className="text-white font-medium">{selectedParcel.areaSqM} sq.m</span>
+                      <span className="text-white font-medium">{(selectedParcel.areaSqM * 10.764).toFixed(0)} sq.ft</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-400">Location</span>

@@ -29,6 +29,19 @@ const Popup = dynamic(
   { ssr: false }
 );
 
+// Custom map icon - emerald pin
+const createCustomIcon = () => {
+  if (typeof window === 'undefined') return null;
+  const L = require('leaflet');
+  return L.divIcon({
+    html: `<div style="background-color: #10b981; width: 24px; height: 24px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"><div style="width: 8px; height: 8px; background: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);"></div></div>`,
+    className: 'custom-map-marker',
+    iconSize: [24, 24],
+    iconAnchor: [12, 24],
+    popupAnchor: [0, -24]
+  });
+};
+
 interface Parcel {
   id: string;
   parcelId: string;
@@ -109,6 +122,7 @@ export default function DashboardMapPage() {
   const [selectedParcel, setSelectedParcel] = useState<Parcel | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [mapReady, setMapReady] = useState(false);
+  const [customIcon, setCustomIcon] = useState<any>(null);
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -118,16 +132,8 @@ export default function DashboardMapPage() {
     link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
     document.head.appendChild(link);
 
-    // Fix Leaflet marker icons (Next.js bundling doesn't include default images)
-    (async () => {
-      const L = await import('leaflet');
-      const DefaultIcon = L.Icon.Default;
-      DefaultIcon.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
-    })();
+    // Create custom pin icon
+    setCustomIcon(createCustomIcon());
     
     setMapReady(true);
     
@@ -142,6 +148,20 @@ export default function DashboardMapPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isAdmin]);
+
+  // Handle parcel selection from URL query params
+  useEffect(() => {
+    if (typeof window !== 'undefined' && parcels.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const parcelParam = params.get('parcel');
+      if (parcelParam && !selectedParcel) {
+        const parcel = parcels.find(p => p.parcelId === parcelParam);
+        if (parcel) {
+          setSelectedParcel(parcel);
+        }
+      }
+    }
+  }, [parcels, selectedParcel]);
 
   const fetchParcels = async () => {
     setLoading(true);
@@ -269,7 +289,7 @@ export default function DashboardMapPage() {
                               {parcel.village}, {parcel.district}
                             </div>
                             <div className="text-slate-500 text-xs mt-1">
-                              {parcel.areaSqM?.toLocaleString()} sq.m
+                              {(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft
                             </div>
                           </div>
                           <span className={`px-2 py-0.5 text-xs rounded ${
@@ -306,6 +326,7 @@ export default function DashboardMapPage() {
                     <Marker
                       key={parcel.id}
                       position={[parcel.latitude, parcel.longitude]}
+                      {...(customIcon ? { icon: customIcon } : {})}
                       eventHandlers={{
                         click: () => setSelectedParcel(parcel),
                       }}
@@ -314,7 +335,7 @@ export default function DashboardMapPage() {
                         <div className="text-sm">
                           <strong>{parcel.parcelId}</strong><br />
                           {parcel.village}, {parcel.district}<br />
-                          {parcel.areaSqM?.toLocaleString()} sq.m
+                          {(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft
                         </div>
                       </Popup>
                     </Marker>
@@ -325,7 +346,7 @@ export default function DashboardMapPage() {
 
             {/* Selected Property Info Card */}
             {selectedParcel && (
-              <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-slate-800 border border-slate-700 rounded-xl p-4 shadow-xl">
+              <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-slate-800 border border-slate-700 rounded-xl p-4 shadow-xl z-[1000]">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-white font-semibold">{selectedParcel.parcelId}</h3>
@@ -353,7 +374,7 @@ export default function DashboardMapPage() {
                   </div>
                   <div>
                     <span className="text-slate-400">Area</span>
-                    <p className="text-white">{selectedParcel.areaSqM?.toLocaleString()} sq.m</p>
+                    <p className="text-white">{(selectedParcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</p>
                   </div>
                 </div>
                 <Link

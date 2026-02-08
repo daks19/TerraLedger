@@ -21,6 +21,8 @@ interface Parcel {
   village: string;
   district: string;
   state: string;
+  latitude?: number;
+  longitude?: number;
   status: string;
   verificationStatus: string;
   createdAt: string;
@@ -167,7 +169,7 @@ export default function ParcelsPage() {
                       </div>
                       <div>
                         <span className="text-slate-400">Area:</span>
-                        <span className="ml-2 text-white">{parcel.areaSqM?.toLocaleString()} sq.m</span>
+                        <span className="ml-2 text-white">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</span>
                       </div>
                       <div className="flex items-center">
                         <MapPinIcon className="w-4 h-4 text-slate-400 mr-1" />
@@ -177,9 +179,23 @@ export default function ParcelsPage() {
                         <span className="text-slate-400">State:</span>
                         <span className="ml-2 text-white">{parcel.state}</span>
                       </div>
+                      {parcel.latitude && parcel.longitude && (
+                        <div className="flex items-center">
+                          <span className="text-slate-400 text-xs font-mono">{parcel.latitude.toFixed(4)}°N, {parcel.longitude.toFixed(4)}°E</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
+                    {parcel.latitude && parcel.longitude && (
+                      <Link
+                        href={`/dashboard/map?parcel=${parcel.parcelId}`}
+                        className="inline-flex items-center px-3 py-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20 transition-all duration-200 hover:scale-105"
+                        title="View on Map"
+                      >
+                        <MapPinIcon className="w-4 h-4" />
+                      </Link>
+                    )}
                     <Link
                       href={`/dashboard/parcels/${parcel.parcelId}`}
                       className="inline-flex items-center px-3 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 hover:scale-105"

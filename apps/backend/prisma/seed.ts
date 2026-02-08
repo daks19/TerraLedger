@@ -73,7 +73,7 @@ async function main() {
     {
       parcelId: 'TL-KA-001',
       surveyNumber: 'SRV/2023/105',
-      areaSqM: 10000,
+      areaSqM: 1000,
       village: 'Whitefield',
       district: 'Bangalore Urban',
       state: 'Karnataka',

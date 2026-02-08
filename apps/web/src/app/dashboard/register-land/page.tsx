@@ -405,7 +405,7 @@ export default function RegisterMyLandPage() {
                   </div>
                   <div>
                     <div className="text-slate-400 text-sm">Area</div>
-                    <div className="text-white font-medium">{formData.areaSqM} sq.m</div>
+                    <div className="text-white font-medium">{(formData.areaSqM * 10.764).toFixed(0)} sq.ft</div>
                   </div>
                   <div>
                     <div className="text-slate-400 text-sm">Village</div>

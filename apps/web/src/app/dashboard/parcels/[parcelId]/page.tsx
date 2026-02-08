@@ -24,6 +24,8 @@ interface ParcelDetails {
   village: string;
   district: string;
   state: string;
+  latitude?: number;
+  longitude?: number;
   status: string;
   verificationStatus: string;
   boundaryHash?: string;
@@ -222,10 +224,31 @@ export default function ParcelDetailPage() {
                 </div>
                 <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 hover:border-emerald-500/30 transition-all duration-300">
                   <div className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-1">Area</div>
-                  <div className="text-emerald-400 font-bold text-lg">{parcel.areaSqM?.toLocaleString()} sq.m</div>
+                  <div className="text-emerald-400 font-bold text-lg">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
                   <div className="text-slate-500 text-sm">({(parcel.areaSqM / 10000).toFixed(2)} ha)</div>
                 </div>
               </div>
+
+              {/* Coordinates */}
+              {parcel.latitude && parcel.longitude && (
+                <div className="mt-4 bg-slate-900/50 p-4 rounded-xl border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
+                  <div className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2">GPS Coordinates</div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-emerald-400 font-mono text-sm font-bold">{parcel.latitude.toFixed(6)}°N</span>
+                      <span className="text-slate-500">,</span>
+                      <span className="text-emerald-400 font-mono text-sm font-bold">{parcel.longitude.toFixed(6)}°E</span>
+                    </div>
+                    <Link
+                      href={`/dashboard/map?parcel=${parcel.parcelId}`}
+                      className="ml-auto inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 rounded-lg hover:bg-emerald-500/30 transition-all duration-300 text-sm font-semibold"
+                    >
+                      <MapPinIcon className="w-4 h-4" />
+                      View on Map
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Owner Details */}
@@ -357,6 +380,15 @@ export default function ParcelDetailPage() {
                 </div>
               </div>
             </div>
+
+            {/* View on Map Button */}
+            <Link
+              href={`/dashboard/map?parcel=${parcel.parcelId}`}
+              className="block w-full px-6 py-4 bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400 rounded-xl hover:bg-emerald-500/30 hover:border-emerald-500 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold text-center flex items-center justify-center gap-3 group"
+            >
+              <MapPinIcon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              View on Map
+            </Link>
 
             {/* Recent Transactions */}
             <div className="bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-orange-500/20 p-6 hover:border-orange-500/40 transition-all duration-300">

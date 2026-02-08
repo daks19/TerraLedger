@@ -463,7 +463,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-slate-300">{parcel.areaSqM?.toLocaleString()} sq.m</div>
+                      <div className="text-slate-300">{(parcel.areaSqM * 10.764).toFixed(0).toLocaleString()} sq.ft</div>
                       <div className={`text-xs px-2 py-1 rounded-full ${
                         parcel.status === 'VERIFIED' ? 'bg-green-500/20 text-green-400' :
                         parcel.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400' :
