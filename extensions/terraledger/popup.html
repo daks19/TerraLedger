@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraLedger</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 340px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #065f46, #0f766e);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .header h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .header p {
+      font-size: 11px;
+      color: #a7f3d0;
+      margin-top: 2px;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      font-size: 12px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #6b7280;
+      flex-shrink: 0;
+    }
+    .status-dot.online { background: #34d399; box-shadow: 0 0 6px #34d399; }
+    .status-dot.offline { background: #f87171; box-shadow: 0 0 6px #f87171; }
+    .status-text { color: #94a3b8; }
+    .status-text span { color: #e2e8f0; font-weight: 500; }
+
+    .content { padding: 16px 20px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #34d399;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      color: #e2e8f0;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .link-btn:hover {
+      background: #334155;
+      border-color: #10b981;
+    }
+    .link-btn .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .link-btn .icon.green { background: rgba(16,185,129,0.15); }
+    .link-btn .icon.blue { background: rgba(59,130,246,0.15); }
+    .link-btn .icon.purple { background: rgba(139,92,246,0.15); }
+    .link-btn .icon.orange { background: rgba(249,115,22,0.15); }
+    .link-btn .desc {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 1px;
+    }
+    .link-btn .arrow {
+      margin-left: auto;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .footer {
+      padding: 12px 20px;
+      border-top: 1px solid #1e293b;
+      text-align: center;
+      font-size: 10px;
+      color: #475569;
+    }
+    .footer a { color: #10b981; text-decoration: none; }
+
+    .loading { color: #64748b; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">🏗️</div>
+    <div>
+      <h1>TerraLedger</h1>
+      <p>Blockchain Land Registry</p>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <div class="status-text" id="statusText">Checking API...</div>
+  </div>
+
+  <div class="content">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="parcelCount">--</div>
+        <div class="stat-label">Parcels</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="apiVersion">--</div>
+        <div class="stat-label">API Version</div>
+      </div>
+    </div>
+
+    <div class="links">
+      <a class="link-btn" href="https://terra-ledger-web.vercel.app/dashboard" target="_blank">
+        <div class="icon green">📊</div>
+        <div>
+          <div>Dashboard</div>
+          <div class="desc">View your properties</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="link-btn" href="https://terra-ledger-web.vercel.app/dashboard/map" target="_blank">
+        <div class="icon blue">🗺️</div>
+        <div>
+          <div>Property Map</div>
+          <div class="desc">Interactive map view</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="link-btn" href="https://terra-ledger-web.vercel.app/dashboard/register-land" target="_blank">
+        <div class="icon purple">📝</div>
+        <div>
+          <div>Register Land</div>
+          <div class="desc">Submit a new parcel</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="link-btn" href="https://terra-ledger.vercel.app/health" target="_blank">
+        <div class="icon orange">⚡</div>
+        <div>
+          <div>API Health</div>
+          <div class="desc">Backend status check</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built with ❤️ by TerraLedger &middot; <a href="https://github.com/daks19/TerraLedger" target="_blank">GitHub</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
