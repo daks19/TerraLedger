@@ -47,7 +47,7 @@ async function main() {
     {
       parcelId: 'TL-MH-001',
       surveyNumber: 'SRV/2024/001',
-      areaSqM: 5000,
+      areaSqM: 250,
       village: 'Andheri East',
       district: 'Mumbai Suburban',
       state: 'Maharashtra',
@@ -60,7 +60,7 @@ async function main() {
     {
       parcelId: 'TL-MH-002',
       surveyNumber: 'SRV/2024/002',
-      areaSqM: 2500,
+      areaSqM: 150,
       village: 'Powai',
       district: 'Mumbai Suburban',
       state: 'Maharashtra',
@@ -73,7 +73,7 @@ async function main() {
     {
       parcelId: 'TL-KA-001',
       surveyNumber: 'SRV/2023/105',
-      areaSqM: 1000,
+      areaSqM: 500,
       village: 'Whitefield',
       district: 'Bangalore Urban',
       state: 'Karnataka',
@@ -86,7 +86,7 @@ async function main() {
     {
       parcelId: 'TL-DL-001',
       surveyNumber: 'SRV/2024/050',
-      areaSqM: 3000,
+      areaSqM: 300,
       village: 'Dwarka',
       district: 'South West Delhi',
       state: 'Delhi',
