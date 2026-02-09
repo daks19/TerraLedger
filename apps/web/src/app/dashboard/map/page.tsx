@@ -63,57 +63,6 @@ const demoCoordinatesByParcelId: Record<string, { latitude: number; longitude: n
   'TL-DL-001': { latitude: 28.5921, longitude: 77.046 },
 };
 
-const demoFallbackParcels: Parcel[] = [
-  {
-    id: '1',
-    parcelId: 'TL-MH-001',
-    surveyNumber: 'SN-2024-001',
-    areaSqM: 250,
-    village: 'Andheri',
-    district: 'Mumbai',
-    state: 'Maharashtra',
-    status: 'VERIFIED',
-    latitude: 19.1136,
-    longitude: 72.8697,
-  },
-  {
-    id: '2',
-    parcelId: 'TL-MH-002',
-    surveyNumber: 'SN-2024-002',
-    areaSqM: 150,
-    village: 'Bandra',
-    district: 'Mumbai',
-    state: 'Maharashtra',
-    status: 'VERIFIED',
-    latitude: 19.0596,
-    longitude: 72.8295,
-  },
-  {
-    id: '3',
-    parcelId: 'TL-KA-001',
-    surveyNumber: 'SN-2024-003',
-    areaSqM: 500,
-    village: 'Whitefield',
-    district: 'Bangalore',
-    state: 'Karnataka',
-    status: 'PENDING',
-    latitude: 12.9698,
-    longitude: 77.7500,
-  },
-  {
-    id: '4',
-    parcelId: 'TL-DL-001',
-    surveyNumber: 'SN-2024-004',
-    areaSqM: 350,
-    village: 'Dwarka',
-    district: 'New Delhi',
-    state: 'Delhi',
-    status: 'VERIFIED',
-    latitude: 28.5921,
-    longitude: 77.0460,
-  },
-];
-
 export default function DashboardMapPage() {
   const { user } = useAuth();
   const isAdmin = user?.roles?.includes('ADMIN') || user?.roles?.includes('GOVERNMENT_OFFICIAL');
@@ -203,13 +152,13 @@ export default function DashboardMapPage() {
           };
         });
 
-        setParcels(enriched.length > 0 ? enriched : demoFallbackParcels);
+        setParcels(enriched);
       } else {
-        setParcels(demoFallbackParcels);
+        setParcels([]);
       }
     } catch (error) {
       console.error('Failed to fetch parcels:', error);
-      setParcels(demoFallbackParcels);
+      setParcels([]);
     } finally {
       setLoading(false);
     }
@@ -268,7 +217,11 @@ export default function DashboardMapPage() {
                 {loading ? (
                   <div className="p-4 text-center text-slate-400">Loading...</div>
                 ) : filteredParcels.length === 0 ? (
-                  <div className="p-4 text-center text-slate-400">No properties found</div>
+                  <div className="p-8 text-center">
+                    <MapPinIcon className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                    <p className="text-slate-400 font-medium">No properties yet</p>
+                    <p className="text-slate-500 text-sm mt-1">Register a land parcel to see it here</p>
+                  </div>
                 ) : (
                   <div className="divide-y divide-slate-700">
                     {filteredParcels.map((parcel, idx) => (
