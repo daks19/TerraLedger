@@ -447,8 +447,8 @@ router.post('/email/register', async (req: Request, res: Response) => {
     // Generate a placeholder wallet address for email-based users
     const placeholderWallet = `0x${Buffer.from(data.email).toString('hex').padStart(40, '0').slice(0, 40)}`;
 
-    // In demo/dev mode, auto-activate accounts. In production, set isActive: false
-    const isDevMode = process.env.NODE_ENV !== 'production';
+    // Auto-activate all accounts (demo project)
+    const isDevMode = true;
 
     // Create user
     try {
@@ -466,12 +466,10 @@ router.post('/email/register', async (req: Request, res: Response) => {
         },
       });
 
-      logger.info(`Email registration submitted: ${data.email} (active: ${isDevMode})`);
+      logger.info(`Email registration successful: ${data.email} (auto-approved)`);
 
       res.status(201).json({
-        message: isDevMode 
-          ? 'Registration successful. You can now sign in.'
-          : 'Registration submitted. Your account will be activated after verification.',
+        message: 'Registration successful. You can now sign in.',
         userId: user.id,
       });
     } catch (error: any) {
