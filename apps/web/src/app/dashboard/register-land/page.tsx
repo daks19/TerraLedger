@@ -110,7 +110,7 @@ export default function RegisterMyLandPage() {
         },
         body: JSON.stringify({
           surveyNumber: formData.surveyNumber,
-          areaSqM: parseFloat(formData.areaSqM),
+          areaSqM: parseFloat((parseFloat(formData.areaSqM) / 10.764).toFixed(2)),
           village: formData.village,
           district: formData.district,
           state: formData.state,
@@ -206,7 +206,7 @@ export default function RegisterMyLandPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Area (sq. meters) *
+                    Area (sq. ft) *
                   </label>
                   <input
                     type="number"
@@ -214,7 +214,7 @@ export default function RegisterMyLandPage() {
                     value={formData.areaSqM}
                     onChange={handleChange}
                     required
-                    placeholder="e.g., 1000"
+                    placeholder="e.g., 2500"
                     className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
                   />
                 </div>
@@ -405,7 +405,7 @@ export default function RegisterMyLandPage() {
                   </div>
                   <div>
                     <div className="text-slate-400 text-sm">Area</div>
-                    <div className="text-white font-medium">{(Number(formData.areaSqM) * 10.764).toFixed(0)} sq.ft</div>
+                    <div className="text-white font-medium">{Number(formData.areaSqM).toFixed(0)} sq.ft</div>
                   </div>
                   <div>
                     <div className="text-slate-400 text-sm">Village</div>

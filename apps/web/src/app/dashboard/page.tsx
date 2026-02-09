@@ -54,6 +54,7 @@ export default function DashboardPage() {
     ipfs: 'healthy',
   });
   const [pendingKYC, setPendingKYC] = useState<any[]>([]);
+  const [approvingId, setApprovingId] = useState<string | null>(null);
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [disputes, setDisputes] = useState<any[]>([]);
@@ -95,11 +96,9 @@ export default function DashboardPage() {
         });
         if (approvalsRes.ok) {
           const approvals = await approvalsRes.json();
+          setPendingKYC(approvals);
           setStats(prev => ({ ...prev, pendingApprovals: approvals.length }));
         }
-
-        // TODO: Fetch real data from APIs
-        // setPendingKYC, setRecentActivity, setAlerts, setDisputes
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
@@ -228,42 +227,67 @@ export default function DashboardPage() {
             )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              {/* KYC Verification Queue */}
+              {/* Pending Land Approval Queue */}
               <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
                 <div className="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <DocumentCheckIcon className="w-5 h-5 text-blue-400" />
-                    KYC Pending Verification
+                    <ClockIcon className="w-5 h-5 text-yellow-400" />
+                    Pending Land Approvals
                   </h2>
                   <span className="text-sm text-slate-400">{pendingKYC.length} pending</span>
                 </div>
-                <div className="divide-y divide-slate-700">
+                <div className="divide-y divide-slate-700 max-h-96 overflow-y-auto">
                   {pendingKYC.length === 0 ? (
                     <div className="p-8 text-center text-slate-400">
-                      No pending KYC verifications
+                      <CheckCircleIcon className="w-10 h-10 mx-auto mb-2 text-slate-600" />
+                      No pending approvals
                     </div>
                   ) : (
-                    pendingKYC.map((kyc) => (
-                      <div key={kyc.id} className="p-4 hover:bg-slate-700/50 transition">
+                    pendingKYC.map((parcel: any) => (
+                      <div key={parcel.id} className="p-4 hover:bg-slate-700/50 transition">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center">
-                              <UserIcon className="w-5 h-5 text-slate-400" />
+                            <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
+                              <DocumentTextIcon className="w-5 h-5 text-yellow-400" />
                             </div>
                             <div>
-                              <div className="text-white font-medium">{kyc.name}</div>
-                              <div className="text-slate-400 text-sm">{kyc.type}</div>
+                              <div className="text-white font-medium font-mono">{parcel.parcelId}</div>
+                              <div className="text-slate-400 text-sm">{parcel.village}, {parcel.district}</div>
                             </div>
                           </div>
-                          <div className="text-slate-400 text-sm">{kyc.submittedAt}</div>
+                          <div className="text-right">
+                            <div className="text-white text-sm">{(Number(parcel.areaSqM) * 10.764).toFixed(0)} sq.ft</div>
+                            <div className="text-slate-500 text-xs">{parcel.submittedBy?.name || parcel.owner?.name || 'Unknown'}</div>
+                          </div>
                         </div>
                         <div className="flex gap-2 mt-3">
-                          <button className="flex-1 px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition">
-                            Approve
+                          <button
+                            disabled={approvingId === parcel.parcelId}
+                            onClick={async () => {
+                              setApprovingId(parcel.parcelId);
+                              try {
+                                const token = sessionStorage.getItem('accessToken');
+                                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/land/approve/${parcel.parcelId}`, {
+                                  method: 'POST',
+                                  headers: { Authorization: `Bearer ${token}` },
+                                });
+                                if (res.ok) {
+                                  setPendingKYC(prev => prev.filter(p => p.id !== parcel.id));
+                                  setStats(prev => ({ ...prev, pendingApprovals: (prev.pendingApprovals || 1) - 1 }));
+                                }
+                              } catch (e) { console.error(e); }
+                              setApprovingId(null);
+                            }}
+                            className="flex-1 px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition disabled:opacity-50"
+                          >
+                            {approvingId === parcel.parcelId ? 'Approving...' : 'Approve'}
                           </button>
-                          <button className="flex-1 px-3 py-1.5 bg-red-500/20 text-red-400 text-sm rounded-lg hover:bg-red-500/30 transition">
-                            Reject
-                          </button>
+                          <Link
+                            href={`/dashboard/admin/approvals`}
+                            className="flex-1 px-3 py-1.5 bg-slate-700 text-slate-300 text-sm rounded-lg hover:bg-slate-600 transition text-center"
+                          >
+                            Review
+                          </Link>
                         </div>
                       </div>
                     ))

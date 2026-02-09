@@ -61,7 +61,7 @@ export default function EditLandPage() {
         const parcel = data.parcel;
         setFormData({
           surveyNumber: parcel.surveyNumber || '',
-          areaSqM: parcel.areaSqM?.toString() || '',
+          areaSqM: parcel.areaSqM ? (Number(parcel.areaSqM) * 10.764).toFixed(0) : '',
           village: parcel.village || '',
           district: parcel.district || '',
           state: parcel.state || '',
@@ -93,7 +93,7 @@ export default function EditLandPage() {
         },
         body: JSON.stringify({
           surveyNumber: formData.surveyNumber,
-          areaSqM: parseFloat(formData.areaSqM),
+          areaSqM: parseFloat((parseFloat(formData.areaSqM) / 10.764).toFixed(2)),
           village: formData.village,
           district: formData.district,
           state: formData.state,
@@ -222,7 +222,7 @@ export default function EditLandPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Area (sq. meters)
+                  Area (sq. ft)
                 </label>
                 <input
                   type="number"
