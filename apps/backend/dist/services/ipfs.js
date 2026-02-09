@@ -31,8 +31,9 @@ class IPFSService {
         try {
             if (!this.pinataApiKey || !this.pinataSecretKey) {
                 logger_1.logger.info('Simulating IPFS upload');
+                const contentHash = require('crypto').createHash('sha256').update(fileBuffer).update(Date.now().toString()).digest('base64url').substring(0, 44);
                 return {
-                    hash: `Qm${Buffer.from(fileName).toString('base64').substring(0, 44)}`,
+                    hash: `Qm${contentHash}`,
                     size: fileBuffer.length,
                 };
             }
@@ -76,8 +77,9 @@ class IPFSService {
             if (!this.pinataApiKey || !this.pinataSecretKey) {
                 logger_1.logger.info('Simulating IPFS JSON upload');
                 const jsonStr = JSON.stringify(data);
+                const contentHash = require('crypto').createHash('sha256').update(jsonStr).update(Date.now().toString()).digest('base64url').substring(0, 44);
                 return {
-                    hash: `Qm${Buffer.from(name).toString('base64').substring(0, 44)}`,
+                    hash: `Qm${contentHash}`,
                     size: jsonStr.length,
                 };
             }
