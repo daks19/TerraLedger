@@ -60,7 +60,7 @@ npm run dev
 PINATA_API_KEY=your-key
 PINATA_SECRET_KEY=your-secret
 ```
-
+  
 **For Blockchain:**
 ```
 BLOCKCHAIN_RPC_URL=https://polygon-mumbai.g.alchemy.com/v2/your-api-key

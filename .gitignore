@@ -61,3 +61,4 @@ packages/contracts/deployments/
 Thumbs.db
 .vercel
 .env*.local
+QUICKSTART.md
