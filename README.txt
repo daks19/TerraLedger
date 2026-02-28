@@ -11,16 +11,14 @@
 
 TerraLedger is a web application for recording and managing land ownership using a hybrid blockchain architecture. Authoritative ownership records and key events are stored on-chain (Solidity smart contracts), while large documents and spatial data are handled off-chain (IPFS and PostgreSQL with PostGIS).
 
-## Core Concepts
-
-- Store authoritative ownership pointers and events on-chain
-- Keep large documents in IPFS
-- Store spatial boundary data in PostGIS for efficient querying
-
 The system includes:
 - **Next.js frontend** for map-based interaction and form workflows
 - **Node.js + Express backend** powered by Prisma for API and database operations
 - **Solidity smart contracts** (developed with Hardhat) for parcel registration, ownership transfers, and basic inheritance flows
+
+## Purpose
+
+Prototype secure parcel registration and tamper-resistant on-chain ownership records.
 
 ## Tech Stack
 
@@ -32,6 +30,12 @@ The system includes:
 - IPFS
 - Solidity (Hardhat)
 - Docker
+
+## Core Concepts
+
+- Store authoritative ownership pointers and events on-chain
+- Keep large documents in IPFS
+- Store spatial boundary data in PostGIS for efficient querying
 
 ## Main Features
 
@@ -50,10 +54,42 @@ The system includes:
 
 ## 📜 Smart Contracts
 
-| Contract               | Description                                         |
-|------------------------|-----------------------------------------------------|
-| AccessControl.sol      | Role management and permission control              |
-| LandRegistry.sol       | Parcel registration and ownership tracking          |
-| EscrowContract.sol     | Secure ownership transfer using escrow logic        |
+| Contract              | Description                                   |
+|----------------------|-----------------------------------------------|
+| AccessControl.sol    | Role management and permission control        |
+| LandRegistry.sol     | Parcel registration and ownership tracking    |
+| EscrowContract.sol   | Secure ownership transfer using escrow logic  |
 | InheritanceManager.sol | Prototype inheritance logic (conditional transfers) |
-| LandBoundary.sol       | Boundary storage, validation, and dispute handling  |
+| LandBoundary.sol     | Boundary storage, validation, and dispute handling |
+
+## Getting Started
+
+### 1. Copy the environment file and update values
+
+```bash
+cp .env.example .env
+```
+
+### 2. Start PostgreSQL and Redis locally
+
+```bash
+docker-compose up -d postgres redis
+```
+
+### 3. Run database migrations and seed initial data
+
+```bash
+cd apps/backend
+npx prisma migrate dev --name init
+node prisma/seed.js
+```
+
+### 4. Running locally
+
+- Backend: `cd apps/backend && pnpm dev`
+- Frontend: `cd apps/web && pnpm dev`
+
+## Testing
+
+- Contract tests: `cd packages/contracts && npx hardhat test`
+- Backend tests: `cd apps/backend && pnpm test`
