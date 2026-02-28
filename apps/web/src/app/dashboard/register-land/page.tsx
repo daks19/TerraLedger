@@ -147,7 +147,7 @@ export default function RegisterMyLandPage() {
             </p>
             <button
               onClick={() => router.push('/dashboard/parcels')}
-              className="px-8 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-105 glow-emerald font-bold border border-emerald-400/30"
+              className="px-8 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold border border-emerald-400/30"
             >
               View My Properties
             </button>
@@ -319,7 +319,7 @@ export default function RegisterMyLandPage() {
               <button
                 onClick={() => setCurrentStep(2)}
                 disabled={!formData.surveyNumber || !formData.areaSqM || !formData.village || !formData.district || !formData.state}
-                className="w-full px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center border border-emerald-400/30 font-bold"
+                className="w-full px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-emerald-400/30 font-bold"
               >
                 Next: Upload Documents
                 <ArrowRightIcon className="w-5 h-5 ml-2" />
@@ -330,7 +330,7 @@ export default function RegisterMyLandPage() {
 
         {/* Step 2: Documents */}
         {currentStep === 2 && (
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6 shadow-xl">
+          <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-6">
             <h2 className="text-lg font-semibold text-white mb-6 flex items-center">
               <CloudArrowUpIcon className="w-5 h-5 mr-2 text-emerald-400" />
               Upload Documents
@@ -373,7 +373,7 @@ export default function RegisterMyLandPage() {
               <div className="flex gap-4">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 hover:scale-105 flex items-center justify-center"
+                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 flex items-center justify-center"
                 >
                   <ArrowLeftIcon className="w-5 h-5 mr-2" />
                   Back
@@ -381,7 +381,7 @@ export default function RegisterMyLandPage() {
                 <button
                   onClick={() => setCurrentStep(3)}
                   disabled={uploadedDocs.filter(d => d.type === 'ownership_proof').length === 0 || uploadedDocs.filter(d => d.type === 'id_proof').length === 0}
-                  className="flex-1 px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center border border-emerald-400/30"
+                  className="flex-1 px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-emerald-400/30"
                 >
                   Next: Review
                   <ArrowRightIcon className="w-5 h-5 ml-2" />
@@ -445,7 +445,7 @@ export default function RegisterMyLandPage() {
               <div className="flex gap-4">
                 <button
                   onClick={() => setCurrentStep(2)}
-                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 hover:scale-105 flex items-center justify-center"
+                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 flex items-center justify-center"
                 >
                   <ArrowLeftIcon className="w-5 h-5 mr-2" />
                   Back
@@ -453,7 +453,7 @@ export default function RegisterMyLandPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 hover:scale-[1.02] glow-success disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center border border-green-400/30 font-bold"
+                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 disabled:opacity-50 flex items-center justify-center border border-green-400/30 font-bold"
                 >
                   {loading ? 'Submitting...' : 'Submit Registration'}
                 </button>
@@ -473,7 +473,7 @@ function StepIndicator({ step, currentStep, label }: { step: Step; currentStep: 
   return (
     <div className="flex flex-col items-center">
       <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 border-2 ${
-        isActive ? 'bg-emerald-500 text-white border-emerald-400 glow-emerald' : isCompleted ? 'bg-green-500 text-white border-green-400 glow-success' : 'bg-slate-700 text-slate-400 border-slate-600'
+        isActive ? 'bg-emerald-500 text-white border-emerald-400' : isCompleted ? 'bg-green-500 text-white border-green-400' : 'bg-slate-700 text-slate-400 border-slate-600'
       }`}>
         {isCompleted ? '✓' : step}
       </div>
@@ -525,7 +525,7 @@ function DocumentUploadBox({
             disabled={loading}
             className="hidden"
           />
-          <div className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center cursor-pointer hover:border-emerald-500 transition-all duration-300 hover:bg-slate-700/30 hover:glow-emerald">
+          <div className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center cursor-pointer hover:border-emerald-500 transition-all duration-300 hover:bg-slate-700/30">
             <CloudArrowUpIcon className="w-8 h-8 mx-auto mb-2 text-slate-400" />
             <div className="text-slate-300 text-sm">Click to upload</div>
             <div className="text-slate-500 text-xs mt-1">PDF, JPG, PNG (Max 10MB)</div>

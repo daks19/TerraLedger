@@ -385,9 +385,9 @@ export default function DashboardPage() {
                   <Link
                     key={action.name}
                     href={action.href}
-                    className="flex items-center gap-4 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-emerald-500/60 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/20 group cursor-pointer"
+                    className="flex items-center gap-4 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-emerald-500/60 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/20 group cursor-pointer"
                   >
-                    <div className={`w-14 h-14 ${action.color} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                    <div className={`w-14 h-14 ${action.color} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:rotate-3 transition-transform duration-300`}>
                       <action.icon className="w-7 h-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -442,9 +442,9 @@ export default function DashboardPage() {
                   <Link
                     key={action.name}
                     href={action.href}
-                    className="flex flex-col items-center p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
+                    className="flex flex-col items-center p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-lg group"
                   >
-                    <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                    <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:rotate-3 transition-transform duration-300`}>
                       <action.icon className="w-6 h-6 text-white" />
                     </div>
                     <span className="text-white font-medium text-center">{action.name}</span>
@@ -460,7 +460,7 @@ export default function DashboardPage() {
           <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-white">My Properties</h2>
-              <Link href="/dashboard/parcels" className="text-emerald-400 hover:text-emerald-300 text-sm transition-all duration-200 hover:scale-105 inline-block">
+              <Link href="/dashboard/parcels" className="text-emerald-400 hover:text-emerald-300 text-sm transition-all duration-200 inline-block">
                 View all →
               </Link>
             </div>
@@ -514,9 +514,9 @@ function StatCard({ title, value, icon: Icon, color }: {
   color: string;
 }) {
   return (
-    <div className="group bg-slate-800/80 rounded-xl border border-slate-700/50 p-6 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 cursor-default hover-lift glow-emerald">
+    <div className="group bg-slate-800/80 rounded-xl border border-slate-700/50 p-6 hover:border-emerald-500/50 transition-all duration-500 cursor-default">
       <div className="flex items-center justify-between mb-4">
-        <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+        <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-all duration-300`}>
           <Icon className="w-6 h-6 text-white" />
         </div>
       </div>

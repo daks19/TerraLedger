@@ -179,7 +179,7 @@ export default function ApprovalQueuePage() {
 
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500 glow-emerald"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : parcels.length === 0 ? (
           <div className="bg-slate-800 rounded-xl border border-slate-700 p-12 text-center">
@@ -206,7 +206,7 @@ export default function ApprovalQueuePage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => setSelectedParcel(parcel)}
-                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 text-sm"
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/50 text-sm"
                     >
                       Review
                     </button>
@@ -334,14 +334,14 @@ export default function ApprovalQueuePage() {
                     setSelectedParcel(null);
                     setRejectionReason('');
                   }}
-                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 hover:scale-105"
+                  className="flex-1 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleReject(selectedParcel.parcelId)}
                   disabled={actionLoading || !rejectionReason.trim()}
-                  className="flex-1 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center"
+                  className="flex-1 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200 hover:shadow-lg hover:shadow-red-500/50 disabled:opacity-50 flex items-center justify-center"
                 >
                   <XCircleIcon className="w-5 h-5 mr-2" />
                   {actionLoading ? 'Rejecting...' : 'Reject'}
@@ -349,7 +349,7 @@ export default function ApprovalQueuePage() {
                 <button
                   onClick={() => handleApprove(selectedParcel.parcelId)}
                   disabled={actionLoading}
-                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center"
+                  className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200 hover:shadow-lg hover:shadow-green-500/50 disabled:opacity-50 flex items-center justify-center"
                 >
                   <CheckCircleIcon className="w-5 h-5 mr-2" />
                   {actionLoading ? 'Approving...' : 'Approve & Register'}

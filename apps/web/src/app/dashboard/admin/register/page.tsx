@@ -361,14 +361,14 @@ export default function RegisterLandPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200 hover:scale-105"
+              className="px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center font-bold"
+              className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center font-bold"
             >
               {loading ? (
                 <>

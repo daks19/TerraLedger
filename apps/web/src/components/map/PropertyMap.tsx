@@ -77,7 +77,7 @@ export default function PropertyMap({
         style={{ height }}
         className="bg-slate-700 rounded-xl flex items-center justify-center"
       >
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-500 glow-emerald"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -135,14 +135,14 @@ export default function PropertyMap({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by survey number, village, or district..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/90 backdrop-blur border border-slate-200 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
+              className="w-full pl-10 pr-4 py-2 rounded-lg bg-white/90 border border-slate-200 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
             />
           </div>
 
           {/* Filter Toggle */}
           <button
             onClick={() => setFilterOpen(!filterOpen)}
-            className={`px-4 py-2 rounded-lg bg-white/90 backdrop-blur border border-slate-200 transition-all duration-300 ${
+            className={`px-4 py-2 rounded-lg bg-white/90 border border-slate-200 transition-all duration-300 ${
               filterOpen ? 'text-emerald-500 border-emerald-500' : 'text-slate-600'
             }`}
           >
@@ -292,7 +292,7 @@ export default function PropertyMap({
                   )}
                   <button
                     onClick={() => window.location.href = `/dashboard/parcels/${parcel.parcelId}`}
-                    className="mt-3 w-full py-2 text-sm bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] font-bold"
+                    className="mt-3 w-full py-2 text-sm bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
                   >
                     View Details
                   </button>
@@ -304,7 +304,7 @@ export default function PropertyMap({
       </MapContainer>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-[1000] bg-white/90 backdrop-blur rounded-lg p-3 text-sm">
+      <div className="absolute bottom-4 left-4 z-[1000] bg-white/90 rounded-lg p-3 text-sm">
         <div className="font-medium text-slate-900 mb-2">Legend</div>
         <div className="space-y-1">
           <div className="flex items-center gap-2">

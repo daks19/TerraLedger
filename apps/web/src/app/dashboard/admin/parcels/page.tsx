@@ -102,7 +102,7 @@ export default function AdminParcelsPage() {
           </div>
           <Link
             href="/dashboard/admin/register"
-            className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+            className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
           >
             <PlusIcon className="w-5 h-5 mr-2" />
             Register New Land
@@ -165,7 +165,7 @@ export default function AdminParcelsPage() {
         {/* Parcels Table */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500 glow-emerald"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filteredParcels.length === 0 ? (
           <div className="bg-slate-800 rounded-xl border border-slate-700 p-12 text-center">
@@ -176,7 +176,7 @@ export default function AdminParcelsPage() {
             </p>
             <Link
               href="/dashboard/admin/register"
-              className="inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+              className="inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
             >
               Register New Land
             </Link>

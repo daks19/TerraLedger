@@ -67,11 +67,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   // Show loading while checking auth
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-xl glow-emerald" />
-          <div className="relative animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-400"></div>
-        </div>
+      <div className="min-h-screen bg-[#0f1729] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-slate-600 border-t-emerald-400"></div>
       </div>
     );
   }
@@ -82,30 +79,25 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 relative">
-      {/* Ambient background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -left-24 w-[34rem] h-[34rem] bg-emerald-500/10 rounded-full blur-3xl glow-pulse float" />
-        <div className="absolute -bottom-28 -right-28 w-[40rem] h-[40rem] bg-cyan-500/10 rounded-full blur-3xl glow-pulse" style={{animationDelay: '1.5s'}} />
-      </div>
+    <div className="min-h-screen bg-[#0f1729] relative">
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-slate-900/60 backdrop-blur-xl border-r border-slate-700/50 transform transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 bg-slate-900/60 border-r border-slate-700/50 transform transition-transform duration-200 lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Logo */}
         <div className="h-16 flex items-center justify-between px-6 border-b border-slate-700/50">
-          <Link href="/dashboard" className="flex items-center space-x-3 transition-transform duration-200 hover:scale-105">
+          <Link href="/dashboard" className="flex items-center space-x-3 transition-transform duration-200">
             <div className="w-14 h-14 rounded-lg flex items-center justify-center overflow-hidden">
               <img src="/assests_own/logo.webp" alt="TerraLedger" className="w-full h-full object-contain" />
             </div>
@@ -130,8 +122,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 href={item.href}
                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 border ${
                   isActive
-                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 glow-emerald'
-                    : 'text-slate-300/80 border-transparent hover:bg-slate-800/60 hover:text-white hover:scale-[1.02]'
+                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                    : 'text-slate-300/80 border-transparent hover:bg-slate-800/60 hover:text-white'
                 }`}
               >
                 <item.icon className="w-5 h-5" />
@@ -156,8 +148,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     href={item.href}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 border ${
                       isActive
-                        ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 glow-emerald'
-                        : 'text-slate-300/80 border-transparent hover:bg-slate-800/60 hover:text-white hover:scale-[1.02]'
+                        ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                        : 'text-slate-300/80 border-transparent hover:bg-slate-800/60 hover:text-white'
                     }`}
                   >
                     <item.icon className="w-5 h-5" />
@@ -182,7 +174,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-2 text-slate-400 hover:text-white transition-all duration-200 hover:scale-105"
+            className="flex items-center space-x-2 text-slate-400 hover:text-white transition-all duration-200"
           >
             <ArrowLeftOnRectangleIcon className="w-5 h-5" />
             <span>Sign out</span>
@@ -193,7 +185,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="lg:pl-64">
         {/* Top Bar */}
-        <header className="h-16 bg-slate-900/40 backdrop-blur-xl border-b border-slate-700/50 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
+        <header className="h-16 bg-slate-900/40 border-b border-slate-700/50 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
           {/* Mobile menu button */}
           <button
             className="lg:hidden text-slate-400 hover:text-white"
@@ -207,7 +199,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <input
               type="search"
               placeholder="Search properties, transactions..."
-              className="w-full px-4 py-2 rounded-lg bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors duration-200"
+              className="w-full px-4 py-2 rounded-lg bg-slate-900/60 border border-slate-700/50 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors duration-200"
             />
           </div>
 
@@ -225,14 +217,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <button
                 onClick={connect}
                 disabled={isConnecting}
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-105 glow-emerald disabled:opacity-50 disabled:hover:scale-100 border border-emerald-400/30"
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 border border-emerald-400/30"
               >
                 {isConnecting ? 'Connecting...' : 'Connect Wallet'}
               </button>
             )}
 
             {/* Notifications */}
-            <button className="relative p-2 text-slate-400 hover:text-white transition-all duration-200 hover:scale-110">
+            <button className="relative p-2 text-slate-400 hover:text-white transition-all duration-200">
               <BellIcon className="w-6 h-6" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
@@ -241,7 +233,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="relative hidden lg:block">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-800/60 transition-all duration-200 hover:scale-105 border border-transparent hover:border-slate-700/60"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-800/60 transition-all duration-200 border border-transparent hover:border-slate-700/60"
               >
                 <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
                   <UserIcon className="w-4 h-4 text-slate-400" />
@@ -251,7 +243,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-700/50 py-1 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-56 bg-slate-900/80 rounded-xl border border-slate-700/50 py-1 overflow-hidden">
                   <Link
                     href="/dashboard/settings"
                     className="block px-4 py-2.5 text-slate-200 hover:bg-slate-800/60 hover:text-white transition-colors duration-200"

@@ -92,23 +92,23 @@ export default function TransactionsPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
             <div className="text-slate-400 text-sm mb-1">Total Transactions</div>
             <div className="text-2xl font-bold text-white">{transactions.length}</div>
           </div>
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
             <div className="text-slate-400 text-sm mb-1">Completed</div>
             <div className="text-2xl font-bold text-green-400">
               {transactions.filter(t => t.status === 'COMPLETED').length}
             </div>
           </div>
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
             <div className="text-slate-400 text-sm mb-1">Pending</div>
             <div className="text-2xl font-bold text-yellow-400">
               {transactions.filter(t => t.status === 'PENDING').length}
             </div>
           </div>
-          <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
+          <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
             <div className="text-slate-400 text-sm mb-1">Failed</div>
             <div className="text-2xl font-bold text-red-400">
               {transactions.filter(t => t.status === 'FAILED').length}
@@ -126,7 +126,7 @@ export default function TransactionsPage() {
                 onClick={() => setFilter(status)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   filter === status
-                    ? 'bg-emerald-500 text-white glow-emerald'
+                    ? 'bg-emerald-500 text-white'
                     : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                 }`}
               >
@@ -139,7 +139,7 @@ export default function TransactionsPage() {
         {/* Transactions List */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500 glow-emerald"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filteredTransactions.length === 0 ? (
           <div className="bg-slate-800 rounded-xl border border-slate-700 p-12 text-center">
@@ -166,7 +166,7 @@ export default function TransactionsPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-700">
                   {filteredTransactions.map((tx) => (
-                    <tr key={tx.id} className="hover:bg-slate-700/50 transition-all duration-200 hover:scale-[1.005]">
+                    <tr key={tx.id} className="hover:bg-slate-700/50 transition-all duration-200">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center">

@@ -74,7 +74,7 @@ export default function SettingsPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   activeTab === tab.id
-                    ? 'bg-emerald-500/10 text-emerald-400 glow-emerald'
+                    ? 'bg-emerald-500/10 text-emerald-400'
                     : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                 }`}
               >
@@ -128,7 +128,7 @@ export default function SettingsPage() {
                   <button
                     onClick={handleSaveProfile}
                     disabled={saving}
-                    className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald disabled:opacity-50 disabled:hover:scale-100 font-bold"
+                    className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 font-bold"
                   >
                     {saving ? 'Saving...' : 'Save Changes'}
                   </button>
@@ -169,7 +169,7 @@ export default function SettingsPage() {
                         className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
                       />
                     </div>
-                    <button className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold">
+                    <button className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold">
                       Update Password
                     </button>
                   </div>
@@ -202,7 +202,7 @@ export default function SettingsPage() {
                       <button 
                         onClick={connect}
                         disabled={isConnecting}
-                        className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 transition-all duration-300 glow-emerald"
+                        className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 transition-all duration-300"
                       >
                         {isConnecting ? 'Connecting...' : 'Connect Wallet'}
                       </button>
@@ -241,7 +241,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => setNotifications({ ...notifications, emailNotifications: !notifications.emailNotifications })}
                       className={`w-12 h-6 rounded-full transition-all duration-300 ${
-                        notifications.emailNotifications ? 'bg-emerald-500 glow-emerald' : 'bg-slate-600'
+                        notifications.emailNotifications ? 'bg-emerald-500' : 'bg-slate-600'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full bg-white transform transition ${
@@ -257,7 +257,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => setNotifications({ ...notifications, transactionAlerts: !notifications.transactionAlerts })}
                       className={`w-12 h-6 rounded-full transition-all duration-300 ${
-                        notifications.transactionAlerts ? 'bg-emerald-500 glow-emerald' : 'bg-slate-600'
+                        notifications.transactionAlerts ? 'bg-emerald-500' : 'bg-slate-600'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full bg-white transform transition ${
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => setNotifications({ ...notifications, marketingEmails: !notifications.marketingEmails })}
                       className={`w-12 h-6 rounded-full transition-all duration-300 ${
-                        notifications.marketingEmails ? 'bg-emerald-500 glow-emerald' : 'bg-slate-600'
+                        notifications.marketingEmails ? 'bg-emerald-500' : 'bg-slate-600'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full bg-white transform transition ${

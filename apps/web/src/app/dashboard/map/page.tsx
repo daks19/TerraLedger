@@ -299,7 +299,7 @@ export default function DashboardMapPage() {
 
             {/* Selected Property Info Card */}
             {selectedParcel && (
-              <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-slate-800 border border-slate-700 rounded-xl p-4 shadow-xl z-[1000]">
+              <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-slate-800 border border-slate-700 rounded-xl p-4 z-[1000]">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-white font-semibold">{selectedParcel.parcelId}</h3>
@@ -332,7 +332,7 @@ export default function DashboardMapPage() {
                 </div>
                 <Link
                   href={`/dashboard/parcels/${selectedParcel.parcelId}`}
-                  className="block w-full px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-center transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+                  className="block w-full px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-center transition-all duration-300 font-bold"
                 >
                   View Full Details
                 </Link>

@@ -127,7 +127,7 @@ export default function InheritancePage() {
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500 glow-emerald"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : (
           <div className="space-y-8">
@@ -157,7 +157,7 @@ export default function InheritancePage() {
                       {plan.status === 'ACTIVE' && (
                         <button
                           onClick={() => setShowAddHeirModal(true)}
-                          className="inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+                          className="inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
                         >
                           <PlusIcon className="w-4 h-4 mr-2" />
                           Add Heir
@@ -258,7 +258,7 @@ export default function InheritancePage() {
                   </p>
                   <button
                     onClick={() => setShowCreateModal(true)}
-                    className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+                    className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
                   >
                     <PlusIcon className="w-5 h-5 mr-2" />
                     Create Inheritance Plan
@@ -296,7 +296,7 @@ export default function InheritancePage() {
                           </div>
                         </div>
                         <button
-                          className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/50"
+                          className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/50"
                         >
                           Claim Now
                         </button>
@@ -456,7 +456,7 @@ function CreatePlanModal({ parcels, onClose, onSuccess }: {
             <button
               type="submit"
               disabled={loading || parcels.length === 0}
-              className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:hover:scale-100 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+              className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 transition-all duration-300 font-bold"
             >
               {loading ? 'Creating...' : 'Create Plan'}
             </button>
@@ -597,7 +597,7 @@ function AddHeirModal({ planId, onClose, onSuccess }: {
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:hover:scale-100 transition-all duration-300 hover:scale-[1.02] glow-emerald font-bold"
+              className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 transition-all duration-300 font-bold"
             >
               {loading ? 'Adding...' : 'Add Heir'}
             </button>

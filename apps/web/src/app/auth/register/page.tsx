@@ -69,7 +69,7 @@ export default function RegisterPage() {
       <main className="min-h-screen bg-slate-900">
         <nav className="bg-slate-800 border-b border-slate-700">
           <div className="max-w-7xl mx-auto px-4 py-4">
-            <Link href="/" className="flex items-center space-x-3 transition-transform duration-200 hover:scale-105">
+            <Link href="/" className="flex items-center space-x-3 transition-transform duration-200">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center overflow-hidden">
                 <img src="/assests_own/logo.webp" alt="TerraLedger" className="w-full h-full object-contain" />
               </div>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
 
         <div className="flex items-center justify-center py-16 px-4">
           <div className="w-full max-w-md text-center">
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-8 shadow-xl">
+            <div className="bg-slate-800 rounded-xl border border-slate-700 p-8">
               <CheckCircleIcon className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
               <h1 className="text-2xl font-bold text-white mb-2">Registration Submitted</h1>
               <p className="text-slate-300 mb-6">
@@ -92,7 +92,7 @@ export default function RegisterPage() {
               </p>
               <Link
                 href="/auth/login"
-                className="inline-block py-3 px-6 bg-emerald-500 text-white font-medium rounded-lg hover:bg-emerald-600 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50"
+                className="inline-block py-3 px-6 bg-emerald-500 text-white font-medium rounded-lg hover:bg-emerald-600 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/50"
               >
                 Go to Login
               </Link>
@@ -108,7 +108,7 @@ export default function RegisterPage() {
       {/* Navigation */}
       <nav className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center space-x-3 transition-transform duration-200 hover:scale-105">
+          <Link href="/" className="flex items-center space-x-3 transition-transform duration-200">
             <div className="w-14 h-14 rounded-lg flex items-center justify-center overflow-hidden">
               <img src="/assests_own/logo.webp" alt="TerraLedger" className="w-full h-full object-contain" />
             </div>
@@ -123,7 +123,7 @@ export default function RegisterPage() {
       {/* Register Form */}
       <div className="flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-md">
-          <div className="bg-slate-800 rounded-xl border border-slate-700 p-8 shadow-xl">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 p-8">
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold text-white mb-2">Register for Access</h1>
               <p className="text-slate-300">
@@ -258,7 +258,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-emerald-500 text-white font-medium rounded-lg hover:bg-emerald-600 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg hover:shadow-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full py-3 bg-emerald-500 text-white font-medium rounded-lg hover:bg-emerald-600 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Submitting...' : 'Register'}
               </button>
