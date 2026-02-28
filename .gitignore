@@ -9,7 +9,7 @@ coverage/
 # Next.js
 .next/
 out/
-
+ 
 # Production
 build/
 # dist/ - commenting out for Vercel deployment
@@ -19,8 +19,6 @@ build/
 .DS_Store
 *.pem
 npm-debug.log*
-pp.py
-main.py
 
 # Log files
 *.log
@@ -62,3 +60,5 @@ Thumbs.db
 .vercel
 .env*.local
 QUICKSTART.md
+.gitignore
+.gitignore

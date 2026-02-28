@@ -269,6 +269,65 @@ router.put('/:parcelId', requireAuth, async (req: Request, res: Response) => {
   }
 });
 
+// DELETE /api/land/:parcelId
+router.delete('/:parcelId', requireAuth, async (req: Request, res: Response) => {
+  try {
+    const roles = (req as any).userRoles || [];
+    const isAdmin = roles.includes('ADMIN') || roles.includes('GOVERNMENT_OFFICIAL');
+
+    if (!isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    const { parcelId } = req.params;
+
+    const parcel = await prisma.landParcel.findUnique({
+      where: { parcelId },
+    });
+
+    if (!parcel) {
+      return res.status(404).json({ error: 'Parcel not found' });
+    }
+
+    // Delete related records first, then the parcel
+    // Related models reference parcel.id (UUID), not parcel.parcelId (string)
+    const id = parcel.id;
+
+    await prisma.$transaction(async (tx) => {
+      // Delete audit logs
+      await tx.auditLog.deleteMany({ where: { parcelId: id } });
+      // Delete documents
+      await tx.document.deleteMany({ where: { parcelId: id } });
+      // Delete ownership history
+      await tx.parcelOwnerHistory.deleteMany({ where: { parcelId: id } });
+      // Delete transactions
+      await tx.transaction.deleteMany({ where: { parcelId: id } });
+      // Delete disputes (survey reports cascade via onDelete)
+      const disputes = await tx.dispute.findMany({ where: { parcelId: id } });
+      for (const d of disputes) {
+        await tx.surveyReport.deleteMany({ where: { disputeId: d.id } });
+      }
+      await tx.dispute.deleteMany({ where: { parcelId: id } });
+      // Disconnect inheritance plans (many-to-many)
+      const plans = await tx.inheritancePlan.findMany({ where: { parcels: { some: { id } } } });
+      for (const plan of plans) {
+        await tx.inheritancePlan.update({
+          where: { id: plan.id },
+          data: { parcels: { disconnect: { id } } },
+        });
+      }
+      // Delete the parcel itself
+      await tx.landParcel.delete({ where: { id } });
+    });
+
+    logger.info(`Parcel ${parcelId} deleted by admin`);
+    res.json({ message: 'Parcel deleted successfully' });
+  } catch (error) {
+    logger.error('Delete parcel error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // POST /api/land/transfer
 router.post('/transfer', requireAuth, async (req: Request, res: Response) => {
   try {

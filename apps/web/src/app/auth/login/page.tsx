@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -61,66 +61,57 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-900 relative">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl glow-pulse float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl glow-pulse" style={{animationDelay: '1.5s'}}></div>
-      </div>
-
+    <main className="min-h-screen bg-[#0f1729]">
       {/* Navigation */}
-      <nav className="relative bg-slate-900/50 backdrop-blur-lg border-b border-slate-700/50">
+      <nav className="bg-[#0f1729] border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <Link href="/" className="flex items-center space-x-3 transition-transform duration-200 hover:scale-105">
-            <div className="w-14 h-14 rounded-lg flex items-center justify-center overflow-hidden">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-9 h-9 rounded-md flex items-center justify-center overflow-hidden">
               <img src="/assests_own/logo.webp" alt="TerraLedger" className="w-full h-full object-contain" />
             </div>
-            <div>
-              <span className="text-2xl font-bold text-white">TerraLedger</span>
-              <p className="text-xs text-slate-400">Land Records Portal</p>
-            </div>
+            <span className="text-lg font-semibold text-white">TerraLedger</span>
           </Link>
         </div>
       </nav>
 
       {/* Login Form */}
-      <div className="relative flex items-center justify-center py-16 px-4">
-        <div className="w-full max-w-md">
-          <div className="bg-slate-900/70 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-8 shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-emerald-400 mb-3 neon-text">Welcome Back</h1>
-              <p className="text-slate-400">
+      <div className="flex items-center justify-center py-12 px-4">
+        <div className="w-full max-w-sm">
+          <div className="bg-slate-800/60 rounded-lg border border-slate-700/40 p-6">
+            <div className="mb-5">
+              <h1 className="text-lg font-semibold text-white mb-1">Sign in</h1>
+              <p className="text-sm text-slate-400">
                 Access your land records with your registered credentials
               </p>
             </div>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-slate-300 mb-2">
-                  Email Address / User ID
+                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Email Address
                 </label>
                 <input
                   {...register('email')}
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 hover:border-slate-500"
-                  placeholder="Enter your registered email"
+                  className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 transition-colors"
+                  placeholder="you@example.com"
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                  <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
                 )}
               </div>
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-slate-300 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1.5">
                   Password
                 </label>
                 <div className="relative">
@@ -128,39 +119,39 @@ export default function LoginPage() {
                     {...register('password')}
                     type={showPassword ? 'text' : 'password'}
                     id="password"
-                    className="w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent pr-12 transition-all duration-300 hover:border-slate-500"
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 pr-10 transition-colors"
                     placeholder="Enter your password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-400 transition-colors duration-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                   >
                     {showPassword ? (
-                      <EyeSlashIcon className="w-5 h-5" />
+                      <EyeSlashIcon className="w-4 h-4" />
                     ) : (
-                      <EyeIcon className="w-5 h-5" />
+                      <EyeIcon className="w-4 h-4" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+                  <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>
                 )}
               </div>
 
-              {/* Submit Button */}
+              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600 transition-all duration-300 hover:scale-[1.02] glow-emerald disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 border border-emerald-400/30"
+                className="w-full py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
-                  <span className="flex items-center justify-center space-x-2">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    <span>Signing in...</span>
+                    Signing in...
                   </span>
                 ) : (
                   'Sign In'
@@ -168,25 +159,50 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Help Text */}
-            <div className="mt-6 pt-6 border-t border-slate-700 text-center">
+            {/* Register link */}
+            <div className="mt-5 pt-4 border-t border-slate-700/50 text-center">
               <p className="text-sm text-slate-400">
                 Don't have an account?{' '}
-                <Link href="/auth/register" className="text-emerald-400 hover:text-emerald-300 transition-colors duration-200 hover:underline">
+                <Link href="/auth/register" className="text-emerald-400 hover:text-emerald-300 hover:underline transition-colors">
                   Register for access
                 </Link>
               </p>
             </div>
           </div>
 
-          {/* Notice */}
-          <div className="mt-6 bg-slate-900/60 backdrop-blur-sm border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10">
-            <p className="text-sm text-slate-300 leading-relaxed">
-              <strong className="text-emerald-400">🔒 Read-Only Access:</strong> This portal allows you to view your registered 
-              land records. All record modifications (registrations, transfers, updates) are 
-              processed by the <strong className="text-white">authorized government server</strong> and require proper 
-              verification through the official online channels.
-            </p>
+          {/* Demo Credentials */}
+          <div className="mt-3 bg-slate-800/40 border border-slate-700/30 rounded-lg p-3">
+            <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-2">Demo Credentials</p>
+            <div className="space-y-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setValue('email', 'owner@example.com');
+                  setValue('password', 'user1234');
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
+              >
+                <div>
+                  <div className="text-sm text-white">Land Owner</div>
+                  <div className="text-[11px] text-slate-500 font-mono">owner@example.com / user1234</div>
+                </div>
+                <span className="text-[11px] text-slate-600">Click to fill</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setValue('email', 'terraadmin@terraledger.com');
+                  setValue('password', 'password123');
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
+              >
+                <div>
+                  <div className="text-sm text-white">Admin</div>
+                  <div className="text-[11px] text-slate-500 font-mono">terraadmin@terraledger.com / password123</div>
+                </div>
+                <span className="text-[11px] text-slate-600">Click to fill</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

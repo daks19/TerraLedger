@@ -19,9 +19,12 @@ export default function EditLandPage() {
   const params = useParams();
   const parcelId = params.parcelId as string;
   const { user } = useAuth();
+  const isAdmin = user?.roles?.includes('ADMIN') || user?.roles?.includes('GOVERNMENT_OFFICIAL') || false;
   
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [notFound, setNotFound] = useState(false);
@@ -35,8 +38,6 @@ export default function EditLandPage() {
     status: '',
     registrationStatus: '',
   });
-
-  const isAdmin = user?.roles?.includes('ADMIN') || user?.roles?.includes('GOVERNMENT_OFFICIAL');
 
   useEffect(() => {
     if (parcelId) {
@@ -328,7 +329,17 @@ export default function EditLandPage() {
           </div>
 
           {/* Submit */}
-          <div className="flex items-center justify-end gap-4">
+          <div className={`flex items-center ${isAdmin ? 'justify-between' : 'justify-end'}`}>
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                className="px-5 py-2.5 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors text-sm"
+              >
+                Delete Parcel
+              </button>
+            )}
+            <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => router.back()}
@@ -353,8 +364,54 @@ export default function EditLandPage() {
                 </>
               )}
             </button>
+            </div>
           </div>
         </form>
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 max-w-sm w-full">
+              <h3 className="text-lg font-semibold text-white mb-2">Delete Parcel</h3>
+              <p className="text-sm text-slate-400 mb-1">Are you sure you want to delete parcel <span className="text-white font-mono">{parcelId}</span>?</p>
+              <p className="text-xs text-red-400 mb-5">This action cannot be undone.</p>
+              <div className="flex items-center justify-end gap-3">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  className="px-4 py-2 bg-slate-700 text-slate-300 text-sm rounded-lg hover:bg-slate-600 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  disabled={deleting}
+                  onClick={async () => {
+                    setDeleting(true);
+                    try {
+                      const token = sessionStorage.getItem('accessToken');
+                      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/land/${parcelId}`, {
+                        method: 'DELETE',
+                        headers: { Authorization: `Bearer ${token}` },
+                      });
+                      if (!res.ok) {
+                        const data = await res.json();
+                        throw new Error(data.error || 'Failed to delete');
+                      }
+                      router.push('/dashboard/parcels');
+                    } catch (err: any) {
+                      setError(err.message);
+                      setShowDeleteConfirm(false);
+                    } finally {
+                      setDeleting(false);
+                    }
+                  }}
+                  className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                >
+                  {deleting ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
