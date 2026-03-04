@@ -275,14 +275,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Notice */}
-          <div className="mt-6 bg-slate-700/50 border border-slate-600 rounded-lg p-4">
-            <p className="text-sm text-slate-300">
-              <strong>Verification Required:</strong> After registration, your account will be 
-              reviewed and verified against official government records. You will receive an 
-              email notification once your account is activated (typically within 2-3 business days).
-            </p>
-          </div>
         </div>
       </div>
     </main>
