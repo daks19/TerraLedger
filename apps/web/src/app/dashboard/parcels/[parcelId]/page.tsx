@@ -160,11 +160,11 @@ export default function ParcelDetailPage() {
           </Link>
           
           {/* Hero Header Card */}
-          <div className="bg-slate-800/60 rounded-lg border border-slate-700/40 p-6 md:p-8 relative overflow-hidden">
+          <div className="bg-slate-800/60 rounded-lg border border-slate-700/40 p-6 md:p-8 relative overflow-hidden shimmer-border accent-bar-emerald">
             
             <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-20 h-20 bg-emerald-500/20 rounded-2xl flex items-center justify-center border-2 border-emerald-500/30">
+                <div className="w-20 h-20 bg-emerald-500/20 rounded-2xl flex items-center justify-center border-2 border-emerald-500/30 icon-glow-emerald">
                   <MapPinIcon className="w-10 h-10 text-emerald-400" />
                 </div>
                 <div>
@@ -185,7 +185,7 @@ export default function ParcelDetailPage() {
               {isAdmin && (
                 <Link
                   href={`/dashboard/admin/edit/${parcel.parcelId}`}
-                  className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold border border-emerald-400/30"
+                  className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold border border-emerald-400/30 btn-glow"
                 >
                   Edit Property
                 </Link>
@@ -198,9 +198,9 @@ export default function ParcelDetailPage() {
           {/* Main Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Location Details */}
-            <div className="bg-slate-800/80 rounded-2xl border border-emerald-500/20 p-6 transition-all duration-300 hover:border-emerald-500/40">
+            <div className="bg-slate-800/80 rounded-2xl border border-emerald-500/20 p-6 transition-all duration-300 hover:border-emerald-500/40 card-shadow-emerald">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center">
-                <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center mr-3 border border-emerald-500/30">
+                <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center mr-3 border border-emerald-500/30 icon-glow-emerald">
                   <MapPinIcon className="w-5 h-5 text-emerald-400" />
                 </div>
                 Location Details
@@ -248,9 +248,9 @@ export default function ParcelDetailPage() {
             </div>
 
             {/* Owner Details */}
-            <div className="bg-slate-800/80 rounded-2xl border border-cyan-500/20 p-6 transition-all duration-300 hover:border-cyan-500/40 slide-in-left">
+            <div className="bg-slate-800/80 rounded-2xl border border-cyan-500/20 p-6 transition-all duration-300 hover:border-cyan-500/40 card-shadow-cyan">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center">
-                <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center mr-3 border border-cyan-500/30">
+                <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center mr-3 border border-cyan-500/30 icon-glow-cyan">
                   <UserIcon className="w-5 h-5 text-cyan-400" />
                 </div>
                 Current Owner
@@ -258,7 +258,7 @@ export default function ParcelDetailPage() {
               {parcel.owner ? (
                 <div className="bg-slate-900/50 p-5 rounded-xl border border-slate-700/50">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-500/30 glow-cyan">
+                    <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-500/30 icon-glow-cyan">
                       <UserIcon className="w-8 h-8 text-cyan-400" />
                     </div>
                     <div className="flex-1">
@@ -283,7 +283,7 @@ export default function ParcelDetailPage() {
             </div>
 
             {/* Documents & Verification */}
-            <div className="bg-slate-800/80 rounded-2xl border-2 border-green-500/30 p-6 transition-all duration-300 hover:border-green-500/50 slide-in-right">
+            <div className="bg-slate-800/80 rounded-2xl border-2 border-green-500/30 p-6 transition-all duration-300 hover:border-green-500/50">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center">
                 <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center mr-3 border border-green-500/30">
                   <ShieldCheckIcon className="w-5 h-5 text-green-400" />
@@ -328,9 +328,9 @@ export default function ParcelDetailPage() {
 
             {/* Ownership History */}
             {parcel.previousOwners && parcel.previousOwners.length > 0 && (
-              <div className="bg-slate-800/80 rounded-2xl border border-purple-500/20 p-6 transition-all duration-300 hover:border-purple-500/40">
+              <div className="bg-slate-800/80 rounded-2xl border border-purple-500/20 p-6 transition-all duration-300 hover:border-purple-500/40 card-shadow-purple">
                 <h2 className="text-xl font-bold text-white mb-6 flex items-center">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mr-3 border border-purple-500/30">
+                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mr-3 border border-purple-500/30 icon-glow-purple">
                     <ClockIcon className="w-5 h-5 text-purple-400" />
                   </div>
                   Ownership History
@@ -360,7 +360,7 @@ export default function ParcelDetailPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Info */}
-            <div className="bg-slate-800/80 rounded-2xl border border-blue-500/20 p-6 hover:border-blue-500/40 transition-all duration-300">
+            <div className="bg-slate-800/80 rounded-2xl border border-blue-500/20 p-6 hover:border-blue-500/40 transition-all duration-300 card-shadow-blue">
               <div className="flex items-center gap-2 mb-4">
                 <ClockIcon className="w-6 h-6 text-blue-400" />
                 <h3 className="text-lg font-bold text-white">Quick Info</h3>
@@ -380,14 +380,14 @@ export default function ParcelDetailPage() {
             {/* View on Map Button */}
             <Link
               href={`/dashboard/map?parcel=${parcel.parcelId}`}
-              className="block w-full px-6 py-4 bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400 rounded-xl hover:bg-emerald-500/30 hover:border-emerald-500 transition-all duration-300 font-bold text-center flex items-center justify-center gap-3 group"
+              className="block w-full px-6 py-4 bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400 rounded-xl hover:bg-emerald-500/30 hover:border-emerald-500 transition-all duration-300 font-bold text-center flex items-center justify-center gap-3 group btn-glow"
             >
               <MapPinIcon className="w-6 h-6 transition-transform duration-300" />
               View on Map
             </Link>
 
             {/* Recent Transactions */}
-            <div className="bg-slate-800/80 rounded-2xl border border-orange-500/20 p-6 hover:border-orange-500/40 transition-all duration-300">
+            <div className="bg-slate-800/80 rounded-2xl border border-orange-500/20 p-6 hover:border-orange-500/40 transition-all duration-300 card-shadow-orange">
               <div className="flex items-center gap-2 mb-4">
                 <ArrowsRightLeftIcon className="w-6 h-6 text-orange-400" />
                 <h3 className="text-lg font-bold text-white">Recent Transactions</h3>

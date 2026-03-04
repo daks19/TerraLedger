@@ -385,7 +385,7 @@ export default function DashboardPage() {
                   <Link
                     key={action.name}
                     href={action.href}
-                    className="flex items-center gap-4 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-emerald-500/60 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/20 group cursor-pointer"
+                    className="flex items-center gap-4 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-emerald-500/60 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/20 group cursor-pointer hover-lift card-shadow-emerald"
                   >
                     <div className={`w-14 h-14 ${action.color} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:rotate-3 transition-transform duration-300`}>
                       <action.icon className="w-7 h-7 text-white" />
@@ -407,7 +407,7 @@ export default function DashboardPage() {
         ) : (
           <>
             {/* Stats Grid - For regular users only */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 stagger-in">
               <StatCard
                 title="Total Properties"
                 value={stats.totalParcels}
@@ -437,12 +437,12 @@ export default function DashboardPage() {
             {/* Quick Actions - For regular users */}
             <div className="mb-8">
               <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-in">
                 {quickActions.map((action) => (
                   <Link
                     key={action.name}
                     href={action.href}
-                    className="flex flex-col items-center p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-lg group"
+                    className="flex flex-col items-center p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-lg group hover-lift"
                   >
                     <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 group-hover:rotate-3 transition-transform duration-300`}>
                       <action.icon className="w-6 h-6 text-white" />
@@ -514,7 +514,7 @@ function StatCard({ title, value, icon: Icon, color }: {
   color: string;
 }) {
   return (
-    <div className="group bg-slate-800/80 rounded-xl border border-slate-700/50 p-6 hover:border-emerald-500/50 transition-all duration-500 cursor-default">
+    <div className="group bg-slate-800/80 rounded-xl border border-slate-700/50 p-6 hover:border-emerald-500/50 transition-all duration-500 cursor-default hover-lift card-shadow-emerald">
       <div className="flex items-center justify-between mb-4">
         <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-all duration-300`}>
           <Icon className="w-6 h-6 text-white" />

@@ -44,8 +44,8 @@ export default function SettingsPage() {
   const tabs = [
     { id: 'profile', name: 'Profile', icon: UserIcon },
     { id: 'security', name: 'Security', icon: ShieldCheckIcon },
-    // { id: 'notifications', name: 'Notifications', icon: BellIcon }, // hidden
-    // { id: 'kyc', name: 'KYC Verification', icon: ShieldCheckIcon }, // hidden
+    { id: 'notifications', name: 'Notifications', icon: BellIcon },
+    { id: 'kyc', name: 'KYC Verification', icon: ShieldCheckIcon },
   ];
 
   return (
@@ -88,7 +88,7 @@ export default function SettingsPage() {
           <div className="flex-1 max-w-2xl">
             {/* Profile Tab */}
             {activeTab === 'profile' && (
-              <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+              <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 shimmer-border">
                 <h2 className="text-lg font-semibold text-white mb-6">Profile Information</h2>
                 <div className="space-y-6">
                   <div>
@@ -128,7 +128,7 @@ export default function SettingsPage() {
                   <button
                     onClick={handleSaveProfile}
                     disabled={saving}
-                    className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 font-bold"
+                    className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 font-bold btn-glow"
                   >
                     {saving ? 'Saving...' : 'Save Changes'}
                   </button>

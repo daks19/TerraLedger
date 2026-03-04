@@ -91,7 +91,7 @@ export default function TransactionsPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 stagger-in">
           <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 p-4 hover:border-emerald-500/30 transition-colors">
             <div className="text-slate-400 text-sm mb-1">Total Transactions</div>
             <div className="text-2xl font-bold text-white">{transactions.length}</div>
@@ -152,7 +152,7 @@ export default function TransactionsPage() {
             </p>
           </div>
         ) : (
-          <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden card-shadow-emerald">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>

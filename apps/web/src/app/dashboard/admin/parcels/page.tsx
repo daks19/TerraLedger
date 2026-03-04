@@ -102,7 +102,7 @@ export default function AdminParcelsPage() {
           </div>
           <Link
             href="/dashboard/admin/register"
-            className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
+            className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold btn-glow"
           >
             <PlusIcon className="w-5 h-5 mr-2" />
             Register New Land
@@ -182,7 +182,7 @@ export default function AdminParcelsPage() {
             </Link>
           </div>
         ) : (
-          <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden card-shadow-emerald">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>

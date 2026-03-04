@@ -190,7 +190,7 @@ export default function ApprovalQueuePage() {
         ) : (
           <div className="grid grid-cols-1 gap-6">
             {parcels.map(parcel => (
-              <div key={parcel.id} className="bg-slate-800 rounded-xl border border-slate-700 p-6 transition-all duration-300 hover:shadow-lg hover:border-slate-600 hover:scale-[1.01]">
+              <div key={parcel.id} className="bg-slate-800 rounded-xl border border-slate-700 p-6 transition-all duration-300 hover:shadow-lg hover:border-slate-600 hover:scale-[1.01] hover-lift">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
@@ -253,7 +253,7 @@ export default function ApprovalQueuePage() {
         {/* Review Modal */}
         {selectedParcel && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-2xl w-full max-h-[90vh] overflow-y-auto shimmer-border">
               <div className="p-6 border-b border-slate-700">
                 <h2 className="text-xl font-bold text-white">Review Registration</h2>
               </div>

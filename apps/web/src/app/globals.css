@@ -98,3 +98,185 @@ code {
     transform: translateY(0);
   }
 }
+
+/* ─── Refined UI Enhancements ─── */
+
+/* Subtle card hover lift — small translateY, soft shadow */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Glass panel — very light frosted look */
+.glass {
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+}
+
+/* Subtle emerald glow on primary buttons */
+.btn-glow {
+  transition: box-shadow 0.25s ease, background-color 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+/* Soft colored card accent shadows */
+.card-shadow-emerald {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-shadow-emerald:hover {
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+}
+
+.card-shadow-cyan {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-shadow-cyan:hover {
+  box-shadow: 0 4px 24px rgba(6, 182, 212, 0.08);
+}
+
+.card-shadow-purple {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-shadow-purple:hover {
+  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.08);
+}
+
+.card-shadow-orange {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-shadow-orange:hover {
+  box-shadow: 0 4px 24px rgba(249, 115, 22, 0.08);
+}
+
+.card-shadow-blue {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-shadow-blue:hover {
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
+}
+
+/* Gradient text — emerald to teal */
+.text-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Staggered entrance animation for grid children */
+.stagger-in > * {
+  opacity: 0;
+  animation: staggerFadeUp 0.4s ease-out forwards;
+}
+.stagger-in > *:nth-child(1) { animation-delay: 0s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.24s; }
+.stagger-in > *:nth-child(6) { animation-delay: 0.30s; }
+
+@keyframes staggerFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle shimmer on borders (on hover) */
+.shimmer-border {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(16, 185, 129, 0.06) 50%,
+    transparent 60%
+  );
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.shimmer-border:hover::after {
+  opacity: 1;
+}
+
+/* Accent top-border bar for section cards */
+.accent-bar-emerald {
+  border-top: 2px solid rgba(16, 185, 129, 0.4);
+}
+.accent-bar-cyan {
+  border-top: 2px solid rgba(6, 182, 212, 0.4);
+}
+.accent-bar-purple {
+  border-top: 2px solid rgba(139, 92, 246, 0.4);
+}
+
+/* Skeleton loading pulse */
+.skeleton {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Subtle pulse for live status dots */
+.pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Smooth page transition */
+.page-enter {
+  animation: pageEnter 0.35s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icon container soft glow */
+.icon-glow-emerald {
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+}
+.icon-glow-cyan {
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+}
+.icon-glow-purple {
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.15);
+}
+.icon-glow-blue {
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+}
+.icon-glow-orange {
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.15);
+}

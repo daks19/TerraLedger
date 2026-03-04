@@ -139,7 +139,7 @@ export default function InheritancePage() {
               </h2>
 
               {plan ? (
-                <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+                <div className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden card-shadow-emerald">
                   {/* Plan Header */}
                   <div className="p-6 border-b border-slate-700">
                     <div className="flex items-center justify-between">
@@ -258,7 +258,7 @@ export default function InheritancePage() {
                   </p>
                   <button
                     onClick={() => setShowCreateModal(true)}
-                    className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold"
+                    className="inline-flex items-center px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 font-bold btn-glow"
                   >
                     <PlusIcon className="w-5 h-5 mr-2" />
                     Create Inheritance Plan

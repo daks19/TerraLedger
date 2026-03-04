@@ -184,7 +184,7 @@ export default function RegisterLandPage() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Land Details */}
-          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 shimmer-border">
             <h2 className="text-lg font-semibold text-white mb-6 flex items-center">
               <MapPinIcon className="w-5 h-5 mr-2 text-emerald-400" />
               Land Details
@@ -442,7 +442,7 @@ export default function RegisterLandPage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center font-bold"
+              className="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center font-bold btn-glow"
             >
               {loading ? (
                 <>

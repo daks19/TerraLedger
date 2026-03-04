@@ -266,7 +266,7 @@ export default function RegisterPage() {
               </button>
             </form>
 
-            {/* HIDDEN - Verification Required notice
+            {/* Verification Required */}
             <div className="mt-6 bg-slate-700/50 border border-slate-600 rounded-lg p-4">
               <p className="text-sm text-slate-300">
                 <strong>Verification Required:</strong> After registration, your account will be
@@ -274,7 +274,6 @@ export default function RegisterPage() {
                 email notification once your account is activated (typically within 2-3 business days).
               </p>
             </div>
-            */}
 
             {/* Login Link */}
             <div className="mt-6 pt-6 border-t border-slate-700 text-center">

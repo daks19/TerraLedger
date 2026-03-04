@@ -21,7 +21,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#0f1729] relative">
 
       {/* Navigation */}
-      <nav className="bg-[#0f1729] border-b border-slate-800 sticky top-0 z-50">
+      <nav className="bg-[#0f1729]/80 glass border-b border-slate-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
@@ -58,7 +58,7 @@ export default function Home() {
               ) : (
                 <Link 
                   href="/auth/login" 
-                  className="px-4 py-2 bg-emerald-600 text-white text-sm rounded-lg hover:bg-emerald-700 font-medium transition-colors"
+                  className="px-4 py-2 bg-emerald-600 text-white text-sm rounded-lg hover:bg-emerald-700 font-medium transition-colors btn-glow"
                 >
                   Sign In
                 </Link>
@@ -71,9 +71,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pt-20 pb-10 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
             Blockchain-Powered
-            <span className="block mt-2 text-emerald-400">
+            <span className="block mt-2 text-gradient">
               Land Registry
             </span>
           </h1>
@@ -86,7 +86,7 @@ export default function Home() {
       {/* Features Section */}
       <section id="features" className="relative pt-6 pb-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 stagger-in">
             <FeatureCard
               icon={<MagnifyingGlassIcon className="w-8 h-8" />}
               title="View Land Records"
@@ -114,7 +114,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-emerald-400 mb-4">How to Get Access</h3>
               <ul className="space-y-4 text-slate-300">
                 <li className="flex items-start space-x-3">
-                  <span className="w-7 h-7 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0">1</span>
+                  <span className="w-7 h-7 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 icon-glow-emerald">1</span>
                   <span className="pt-0.5 text-sm">Register online with your Aadhaar and land ownership details</span>
                 </li>
                 <li className="flex items-start space-x-3">
@@ -133,7 +133,7 @@ export default function Home() {
             </div>
             <div className="space-y-5">
               <h3 className="text-xl font-semibold text-slate-300 mb-4">Notice</h3>
-              <div className="bg-slate-800/60 border border-slate-700/40 rounded-lg p-5">
+              <div className="bg-slate-800/60 border border-slate-700/40 rounded-lg p-5 shimmer-border">
                 <p className="text-slate-400 text-sm leading-relaxed">
                   <strong className="text-emerald-400">Data Security:</strong> Your records are secured using blockchain 
                   technology. All modifications require server-side verification and are 
@@ -170,8 +170,8 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="bg-slate-800/60 rounded-lg p-5 border border-slate-700/40 hover:border-slate-600 transition-colors">
-      <div className="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center text-white mb-3">
+    <div className="bg-slate-800/60 rounded-lg p-5 border border-slate-700/40 hover:border-emerald-500/30 transition-all duration-300 hover-lift shimmer-border">
+      <div className="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center text-white mb-3 icon-glow-emerald">
         {icon}
       </div>
       <h3 className="text-base font-semibold text-white mb-1.5">{title}</h3>

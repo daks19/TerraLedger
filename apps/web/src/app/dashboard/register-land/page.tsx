@@ -229,7 +229,7 @@ export default function RegisterMyLandPage() {
 
         {/* Step 1: Land Details */}
         {currentStep === 1 && (
-          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 shimmer-border">
             <h2 className="text-lg font-semibold text-white mb-6 flex items-center">
               <MapPinIcon className="w-5 h-5 mr-2 text-emerald-400" />
               Land Details
@@ -376,7 +376,6 @@ export default function RegisterMyLandPage() {
                 </div>
               </div>
 
-              {/* HIDDEN - Boundary GeoJSON field
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">
                   Boundary GeoJSON (Optional)
@@ -391,12 +390,11 @@ export default function RegisterMyLandPage() {
                 />
                 <p className="text-xs text-slate-400 mt-1">Optional: Paste GeoJSON polygon coordinates</p>
               </div>
-              */}
 
               <button
                 onClick={() => setCurrentStep(2)}
                 disabled={!formData.surveyNumber || !formData.areaSqM || !formData.village || !formData.district || !formData.state}
-                className="w-full px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-emerald-400/30 font-bold"
+                className="w-full px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border border-emerald-400/30 font-bold btn-glow"
               >
                 Next: Upload Documents
                 <ArrowRightIcon className="w-5 h-5 ml-2" />

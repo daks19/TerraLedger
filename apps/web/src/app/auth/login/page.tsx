@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-[#0f1729]">
       {/* Navigation */}
-      <nav className="bg-[#0f1729] border-b border-slate-800">
+      <nav className="bg-[#0f1729]/80 glass border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <Link href="/" className="flex items-center space-x-3">
             <div className="w-9 h-9 rounded-md flex items-center justify-center overflow-hidden">
@@ -76,8 +76,8 @@ export default function LoginPage() {
 
       {/* Login Form */}
       <div className="flex items-center justify-center py-12 px-4">
-        <div className="w-full max-w-sm">
-          <div className="bg-slate-800/60 rounded-lg border border-slate-700/40 p-6">
+        <div className="w-full max-w-sm animate-fade-in">
+          <div className="bg-slate-800/60 rounded-lg border border-slate-700/40 p-6 shimmer-border hover-lift">
             <div className="mb-5">
               <h1 className="text-lg font-semibold text-white mb-1">Sign in</h1>
               <p className="text-sm text-slate-400">
@@ -143,7 +143,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed btn-glow"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -159,7 +159,7 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* HIDDEN - Demo Credentials
+            {/* Demo Credentials */}
             <div className="mt-3 bg-slate-800/40 border border-slate-700/30 rounded-lg p-3">
               <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-2">Demo Credentials</p>
               <div className="space-y-1.5">
@@ -187,7 +187,6 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
-            */}
 
             {/* Register link */}
             <div className="mt-5 pt-4 border-t border-slate-700/50 text-center">

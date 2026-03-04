@@ -33,7 +33,7 @@ const navigation = [
   { name: 'My Properties', href: '/dashboard/parcels', icon: DocumentTextIcon },
   { name: 'Register Land', href: '/dashboard/register-land', icon: DocumentPlusIcon },
   { name: 'Property Map', href: '/dashboard/map', icon: MapIcon },
-  // { name: 'Transactions', href: '/dashboard/transactions', icon: ArrowsRightLeftIcon }, // hidden
+  { name: 'Transactions', href: '/dashboard/transactions', icon: ArrowsRightLeftIcon },
   { name: 'Inheritance', href: '/dashboard/inheritance', icon: UserGroupIcon },
 ];
 
@@ -185,7 +185,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="lg:pl-64">
         {/* Top Bar */}
-        <header className="h-16 bg-slate-900/40 border-b border-slate-700/50 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
+        <header className="h-16 bg-slate-900/60 glass border-b border-slate-700/50 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
           {/* Mobile menu button */}
           <button
             className="lg:hidden text-slate-400 hover:text-white"
@@ -208,7 +208,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {/* Wallet Connection */}
             {isConnected && account ? (
               <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-500/30 rounded-lg">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-green-500 rounded-full pulse-dot"></div>
                 <span className="text-green-400 text-sm font-mono">
                   {account.slice(0, 6)}...{account.slice(-4)}
                 </span>
@@ -217,7 +217,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <button
                 onClick={connect}
                 disabled={isConnecting}
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 border border-emerald-400/30"
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 border border-emerald-400/30 btn-glow"
               >
                 {isConnecting ? 'Connecting...' : 'Connect Wallet'}
               </button>
@@ -226,7 +226,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {/* Notifications */}
             <button className="relative p-2 text-slate-400 hover:text-white transition-all duration-200">
               <BellIcon className="w-6 h-6" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full pulse-dot"></span>
             </button>
 
             {/* User Menu */}
@@ -243,7 +243,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-slate-900/80 rounded-xl border border-slate-700/50 py-1 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-56 bg-slate-900/80 glass rounded-xl border border-slate-700/50 py-1 overflow-hidden animate-slide-up">
                   <Link
                     href="/dashboard/settings"
                     className="block px-4 py-2.5 text-slate-200 hover:bg-slate-800/60 hover:text-white transition-colors duration-200"
@@ -264,7 +264,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </header>
 
         {/* Page Content */}
-        <main className="relative p-4 lg:p-8">{children}</main>
+        <main className="relative p-4 lg:p-8 page-enter">{children}</main>
       </div>
     </div>
   );

@@ -86,7 +86,7 @@ export default function ParcelsPage() {
           {isAdmin && (
             <Link
               href="/dashboard/admin/register"
-              className="mt-4 md:mt-0 inline-flex items-center px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 border border-emerald-400/30"
+              className="mt-4 md:mt-0 inline-flex items-center px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-300 border border-emerald-400/30 btn-glow"
             >
               <DocumentTextIcon className="w-5 h-5 mr-2" />
               Register New Land
@@ -147,7 +147,7 @@ export default function ParcelsPage() {
             {filteredParcels.map((parcel) => (
               <div
                 key={parcel.id}
-                className="bg-slate-800 rounded-xl border border-slate-700 p-6 hover:border-slate-600 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]"
+                className="bg-slate-800 rounded-xl border border-slate-700 p-6 hover:border-slate-600 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover-lift"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex-1">
