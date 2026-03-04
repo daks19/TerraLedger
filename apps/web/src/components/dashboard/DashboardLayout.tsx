@@ -33,7 +33,7 @@ const navigation = [
   { name: 'My Properties', href: '/dashboard/parcels', icon: DocumentTextIcon },
   { name: 'Register Land', href: '/dashboard/register-land', icon: DocumentPlusIcon },
   { name: 'Property Map', href: '/dashboard/map', icon: MapIcon },
-  { name: 'Transactions', href: '/dashboard/transactions', icon: ArrowsRightLeftIcon },
+  // { name: 'Transactions', href: '/dashboard/transactions', icon: ArrowsRightLeftIcon }, // hidden
   { name: 'Inheritance', href: '/dashboard/inheritance', icon: UserGroupIcon },
 ];
 

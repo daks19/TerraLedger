@@ -1,4 +1,4 @@
-const API_URL = 'https://terra-ledger.vercel.app';
+const API_URL = 'http://localhost:4000';
 
 document.addEventListener('DOMContentLoaded', () => {
   checkHealth();

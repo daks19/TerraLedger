@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { useAuth } from '@/components/Providers';
@@ -18,6 +18,11 @@ export default function RegisterLandPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [geocoding, setGeocoding] = useState(false);
+  const [geocoded, setGeocoded] = useState(false);
+  const geocodeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const KNOWN_STATES = ['Maharashtra', 'Karnataka', 'Delhi', 'Tamil Nadu', 'Gujarat', 'Rajasthan', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala'];
 
   const [formData, setFormData] = useState({
     surveyNumber: '',
@@ -35,6 +40,56 @@ export default function RegisterLandPage() {
   });
 
   const isAdmin = user?.roles?.includes('ADMIN') || user?.roles?.includes('GOVERNMENT_OFFICIAL');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    if (e.target.name === 'village' || e.target.name === 'district' || e.target.name === 'state') {
+      setGeocoded(false);
+    }
+  };
+
+  useEffect(() => {
+    const lat = parseFloat(formData.latitude);
+    const lon = parseFloat(formData.longitude);
+    if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) return;
+
+    if (geocodeTimerRef.current) clearTimeout(geocodeTimerRef.current);
+
+    geocodeTimerRef.current = setTimeout(async () => {
+      setGeocoding(true);
+      setGeocoded(false);
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`,
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        const addr = data.address || {};
+        const village = addr.village || addr.hamlet || addr.suburb || addr.town || addr.city || '';
+        const district = addr.county || addr.state_district || addr.district || addr.city_district || '';
+        const rawState = addr.state || '';
+        const matchedState = KNOWN_STATES.find(s =>
+          rawState.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(rawState.toLowerCase())
+        ) || '';
+        setFormData(prev => ({
+          ...prev,
+          village: village || prev.village,
+          district: district || prev.district,
+          state: matchedState || prev.state,
+        }));
+        setGeocoded(true);
+      } catch {
+        // silent fail
+      } finally {
+        setGeocoding(false);
+      }
+    }, 800);
+
+    return () => {
+      if (geocodeTimerRef.current) clearTimeout(geocodeTimerRef.current);
+    };
+  }, [formData.latitude, formData.longitude]);
 
   if (!isAdmin) {
     return (
@@ -96,13 +151,6 @@ export default function RegisterLandPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
   };
 
   if (success) {
@@ -171,66 +219,28 @@ export default function RegisterLandPage() {
                   className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Village/Town *
-                </label>
-                <input
-                  type="text"
-                  name="village"
-                  value={formData.village}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., Andheri East"
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  District *
-                </label>
-                <input
-                  type="text"
-                  name="district"
-                  value={formData.district}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., Mumbai Suburban"
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  State *
-                </label>
-                <select
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
-                >
-                  <option value="">Select State</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Karnataka">Karnataka</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Tamil Nadu">Tamil Nadu</option>
-                  <option value="Gujarat">Gujarat</option>
-                  <option value="Rajasthan">Rajasthan</option>
-                  <option value="Uttar Pradesh">Uttar Pradesh</option>
-                  <option value="West Bengal">West Bengal</option>
-                  <option value="Telangana">Telangana</option>
-                  <option value="Kerala">Kerala</option>
-                </select>
-              </div>
             </div>
 
             <div className="mt-6 bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-              <h3 className="text-sm font-medium text-emerald-400 mb-3 flex items-center">
-                <MapPinIcon className="w-4 h-4 mr-2" />
-                GPS Coordinates <span className="text-red-400">*</span>
+              <h3 className="text-sm font-medium text-emerald-400 mb-3 flex items-center justify-between">
+                <span className="flex items-center">
+                  <MapPinIcon className="w-4 h-4 mr-2" />
+                  GPS Coordinates <span className="text-red-400 ml-1">*</span>
+                </span>
+                {geocoding && (
+                  <span className="text-xs text-slate-400 flex items-center gap-1">
+                    <svg className="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Fetching address...
+                  </span>
+                )}
+                {geocoded && !geocoding && (
+                  <span className="text-xs text-emerald-400">Address auto-filled from coordinates</span>
+                )}
               </h3>
-              <p className="text-xs text-slate-400 mb-3">Enter GPS coordinates to mark the property location on the map</p>
+              <p className="text-xs text-slate-400 mb-3">Enter GPS coordinates — Village, District &amp; State will be auto-filled</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -264,6 +274,70 @@ export default function RegisterLandPage() {
                   />
                   <p className="text-xs text-slate-400 mt-1">Range: -180 to 180</p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2 flex items-center justify-between">
+                  <span>Village/Town *</span>
+                  {geocoded && formData.village && <span className="text-xs text-emerald-400 font-normal">Auto-filled</span>}
+                </label>
+                <input
+                  type="text"
+                  name="village"
+                  value={formData.village}
+                  onChange={handleChange}
+                  required
+                  placeholder={geocoding ? 'Fetching...' : 'e.g., Andheri East'}
+                  className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 ${
+                    geocoded && formData.village ? 'border-emerald-500/50' : 'border-slate-600'
+                  }`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2 flex items-center justify-between">
+                  <span>District *</span>
+                  {geocoded && formData.district && <span className="text-xs text-emerald-400 font-normal">Auto-filled</span>}
+                </label>
+                <input
+                  type="text"
+                  name="district"
+                  value={formData.district}
+                  onChange={handleChange}
+                  required
+                  placeholder={geocoding ? 'Fetching...' : 'e.g., Mumbai Suburban'}
+                  className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 ${
+                    geocoded && formData.district ? 'border-emerald-500/50' : 'border-slate-600'
+                  }`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2 flex items-center justify-between">
+                  <span>State *</span>
+                  {geocoded && formData.state && <span className="text-xs text-emerald-400 font-normal">Auto-filled</span>}
+                </label>
+                <select
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                  className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 ${
+                    geocoded && formData.state ? 'border-emerald-500/50' : 'border-slate-600'
+                  }`}
+                >
+                  <option value="">Select State</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Kerala">Kerala</option>
+                </select>
               </div>
             </div>
           </div>

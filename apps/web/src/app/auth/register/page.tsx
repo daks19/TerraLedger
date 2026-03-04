@@ -11,7 +11,7 @@ const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
-  aadhaar: z.string().length(12, 'Aadhaar number must be 12 digits').regex(/^\d+$/, 'Aadhaar must contain only digits'),
+  aadhaar: z.string().regex(/^\d{12}$/, 'Aadhaar must be exactly 12 digits').optional().or(z.literal('')),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -45,7 +45,9 @@ export default function RegisterPage() {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          aadhaarNumber: data.aadhaar,
+          aadhaarNumber: data.aadhaar && data.aadhaar.length === 12
+            ? data.aadhaar
+            : Math.floor(100000000000 + Math.random() * 900000000000).toString(),
           password: data.password,
         }),
       });
@@ -192,7 +194,7 @@ export default function RegisterPage() {
               {/* Aadhaar */}
               <div>
                 <label htmlFor="aadhaar" className="block text-sm font-medium text-slate-300 mb-2">
-                  Aadhaar Number
+                  Aadhaar Number <span className="text-slate-500 font-normal">(Optional)</span>
                 </label>
                 <input
                   {...register('aadhaar')}
@@ -200,7 +202,7 @@ export default function RegisterPage() {
                   id="aadhaar"
                   maxLength={12}
                   className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                  placeholder="Enter your 12-digit Aadhaar number"
+                  placeholder="Enter your 12-digit Aadhaar number (or leave blank)"
                 />
                 {errors.aadhaar && (
                   <p className="mt-1 text-sm text-red-600">{errors.aadhaar.message}</p>
@@ -263,6 +265,16 @@ export default function RegisterPage() {
                 {loading ? 'Submitting...' : 'Register'}
               </button>
             </form>
+
+            {/* HIDDEN - Verification Required notice
+            <div className="mt-6 bg-slate-700/50 border border-slate-600 rounded-lg p-4">
+              <p className="text-sm text-slate-300">
+                <strong>Verification Required:</strong> After registration, your account will be
+                reviewed and verified against official government records. You will receive an
+                email notification once your account is activated (typically within 2-3 business days).
+              </p>
+            </div>
+            */}
 
             {/* Login Link */}
             <div className="mt-6 pt-6 border-t border-slate-700 text-center">

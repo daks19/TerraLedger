@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginForm>({
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -159,6 +159,36 @@ export default function LoginPage() {
               </button>
             </form>
 
+            {/* HIDDEN - Demo Credentials
+            <div className="mt-3 bg-slate-800/40 border border-slate-700/30 rounded-lg p-3">
+              <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-2">Demo Credentials</p>
+              <div className="space-y-1.5">
+                <button
+                  type="button"
+                  onClick={() => { setValue('email', 'owner@example.com'); setValue('password', 'user1234'); }}
+                  className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
+                >
+                  <div>
+                    <div className="text-sm text-white">Land Owner</div>
+                    <div className="text-[11px] text-slate-500 font-mono">owner@example.com / user1234</div>
+                  </div>
+                  <span className="text-[11px] text-slate-600">Click to fill</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setValue('email', 'terraadmin@terraledger.com'); setValue('password', 'password123'); }}
+                  className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
+                >
+                  <div>
+                    <div className="text-sm text-white">Admin</div>
+                    <div className="text-[11px] text-slate-500 font-mono">terraadmin@terraledger.com / password123</div>
+                  </div>
+                  <span className="text-[11px] text-slate-600">Click to fill</span>
+                </button>
+              </div>
+            </div>
+            */}
+
             {/* Register link */}
             <div className="mt-5 pt-4 border-t border-slate-700/50 text-center">
               <p className="text-sm text-slate-400">
@@ -170,40 +200,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Demo Credentials */}
-          <div className="mt-3 bg-slate-800/40 border border-slate-700/30 rounded-lg p-3">
-            <p className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-2">Demo Credentials</p>
-            <div className="space-y-1.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setValue('email', 'owner@example.com');
-                  setValue('password', 'user1234');
-                }}
-                className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
-              >
-                <div>
-                  <div className="text-sm text-white">Land Owner</div>
-                  <div className="text-[11px] text-slate-500 font-mono">owner@example.com / user1234</div>
-                </div>
-                <span className="text-[11px] text-slate-600">Click to fill</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setValue('email', 'terraadmin@terraledger.com');
-                  setValue('password', 'password123');
-                }}
-                className="w-full flex items-center justify-between px-3 py-2 bg-slate-900/40 rounded border border-slate-700/40 hover:border-slate-600 transition-colors text-left"
-              >
-                <div>
-                  <div className="text-sm text-white">Admin</div>
-                  <div className="text-[11px] text-slate-500 font-mono">terraadmin@terraledger.com / password123</div>
-                </div>
-                <span className="text-[11px] text-slate-600">Click to fill</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </main>

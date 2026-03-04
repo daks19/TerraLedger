@@ -44,8 +44,8 @@ export default function SettingsPage() {
   const tabs = [
     { id: 'profile', name: 'Profile', icon: UserIcon },
     { id: 'security', name: 'Security', icon: ShieldCheckIcon },
-    { id: 'notifications', name: 'Notifications', icon: BellIcon },
-    { id: 'kyc', name: 'KYC Verification', icon: ShieldCheckIcon },
+    // { id: 'notifications', name: 'Notifications', icon: BellIcon }, // hidden
+    // { id: 'kyc', name: 'KYC Verification', icon: ShieldCheckIcon }, // hidden
   ];
 
   return (
