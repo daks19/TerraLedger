@@ -69,15 +69,15 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-10 px-4">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative pt-20 pb-10 px-4 hero-glow">
+        <div className="max-w-6xl mx-auto relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
             Blockchain-Powered
             <span className="block mt-2 text-gradient">
               Land Registry
             </span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl">
+          <p className="text-lg text-slate-400 max-w-2xl animate-fade-in delay-200">
             Secure, transparent, and efficient land ownership management powered by blockchain technology
           </p>
         </div>

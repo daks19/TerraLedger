@@ -99,91 +99,92 @@ code {
   }
 }
 
-/* ─── Refined UI Enhancements ─── */
+/* ─── UI Enhancements ─── */
 
-/* Subtle card hover lift — small translateY, soft shadow */
+/* Card hover lift */
 .hover-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
 }
 .hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 16px rgba(16, 185, 129, 0.1);
 }
 
-/* Glass panel — very light frosted look */
+/* Glass panel */
 .glass {
-  backdrop-filter: blur(12px) saturate(1.3);
-  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
 }
 
-/* Subtle emerald glow on primary buttons */
+/* Emerald glow on primary buttons */
 .btn-glow {
-  transition: box-shadow 0.25s ease, background-color 0.2s ease;
+  transition: box-shadow 0.3s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 .btn-glow:hover {
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.2);
+  transform: translateY(-1px);
 }
 
-/* Soft colored card accent shadows */
+/* Colored card hover shadows */
 .card-shadow-emerald {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-shadow-emerald:hover {
-  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2), 0 0 12px rgba(16, 185, 129, 0.1);
 }
 
 .card-shadow-cyan {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-shadow-cyan:hover {
-  box-shadow: 0 4px 24px rgba(6, 182, 212, 0.08);
+  box-shadow: 0 8px 30px rgba(6, 182, 212, 0.2), 0 0 12px rgba(6, 182, 212, 0.1);
 }
 
 .card-shadow-purple {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-shadow-purple:hover {
-  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.08);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2), 0 0 12px rgba(139, 92, 246, 0.1);
 }
 
 .card-shadow-orange {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-shadow-orange:hover {
-  box-shadow: 0 4px 24px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2), 0 0 12px rgba(249, 115, 22, 0.1);
 }
 
 .card-shadow-blue {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-shadow-blue:hover {
-  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2), 0 0 12px rgba(59, 130, 246, 0.1);
 }
 
-/* Gradient text — emerald to teal */
+/* Gradient text — emerald to cyan */
 .text-gradient {
-  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #34d399 0%, #22d3ee 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Staggered entrance animation for grid children */
+/* Staggered entrance animation */
 .stagger-in > * {
   opacity: 0;
-  animation: staggerFadeUp 0.4s ease-out forwards;
+  animation: staggerFadeUp 0.5s ease-out forwards;
 }
 .stagger-in > *:nth-child(1) { animation-delay: 0s; }
-.stagger-in > *:nth-child(2) { animation-delay: 0.06s; }
-.stagger-in > *:nth-child(3) { animation-delay: 0.12s; }
-.stagger-in > *:nth-child(4) { animation-delay: 0.18s; }
-.stagger-in > *:nth-child(5) { animation-delay: 0.24s; }
-.stagger-in > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.2s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.3s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.4s; }
+.stagger-in > *:nth-child(6) { animation-delay: 0.5s; }
 
 @keyframes staggerFadeUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -191,7 +192,7 @@ code {
   }
 }
 
-/* Subtle shimmer on borders (on hover) */
+/* Shimmer sweep on hover */
 .shimmer-border {
   position: relative;
   overflow: hidden;
@@ -199,31 +200,35 @@ code {
 .shimmer-border::after {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
   border-radius: inherit;
-  opacity: 0;
   background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(16, 185, 129, 0.06) 50%,
-    transparent 60%
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.08) 40%,
+    rgba(16, 185, 129, 0.15) 50%,
+    rgba(16, 185, 129, 0.08) 60%,
+    transparent 100%
   );
-  transition: opacity 0.3s ease;
+  transition: left 0.6s ease;
   pointer-events: none;
 }
 .shimmer-border:hover::after {
-  opacity: 1;
+  left: 100%;
 }
 
-/* Accent top-border bar for section cards */
+/* Accent top-border bar */
 .accent-bar-emerald {
-  border-top: 2px solid rgba(16, 185, 129, 0.4);
+  border-top: 2px solid rgba(16, 185, 129, 0.5);
 }
 .accent-bar-cyan {
-  border-top: 2px solid rgba(6, 182, 212, 0.4);
+  border-top: 2px solid rgba(6, 182, 212, 0.5);
 }
 .accent-bar-purple {
-  border-top: 2px solid rgba(139, 92, 246, 0.4);
+  border-top: 2px solid rgba(139, 92, 246, 0.5);
 }
 
 /* Skeleton loading pulse */
@@ -238,25 +243,26 @@ code {
   100% { background-position: -200% 0; }
 }
 
-/* Subtle pulse for live status dots */
+/* Pulse for live status dots */
 .pulse-dot {
   animation: pulseDot 2s ease-in-out infinite;
+  box-shadow: 0 0 6px currentColor;
 }
 
 @keyframes pulseDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
 }
 
-/* Smooth page transition */
+/* Page transition */
 .page-enter {
-  animation: pageEnter 0.35s ease-out;
+  animation: pageEnter 0.4s ease-out;
 }
 
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -264,19 +270,37 @@ code {
   }
 }
 
-/* Icon container soft glow */
+/* Icon container glow */
 .icon-glow-emerald {
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), 0 0 4px rgba(16, 185, 129, 0.2);
 }
 .icon-glow-cyan {
-  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.35), 0 0 4px rgba(6, 182, 212, 0.2);
 }
 .icon-glow-purple {
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.35), 0 0 4px rgba(139, 92, 246, 0.2);
 }
 .icon-glow-blue {
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.35), 0 0 4px rgba(59, 130, 246, 0.2);
 }
 .icon-glow-orange {
-  box-shadow: 0 0 12px rgba(249, 115, 22, 0.15);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.35), 0 0 4px rgba(249, 115, 22, 0.2);
+}
+
+/* Ambient hero glow */
+.hero-glow::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: -10%;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Focus ring for inputs */
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
